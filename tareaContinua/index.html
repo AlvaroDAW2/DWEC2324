@@ -30,9 +30,18 @@
         email: 'risus.Quisque@urna.ca'
       })
 
-      const NOMBRE_NUEVO_CONTACTO = prompt('Pon el nombre del nuevo contacto')
-      const TLF_NUEVO_CONTACTO = prompt('Pon el teléfono del nuevo contacto')
-      const EMAIL_NUEVO_CONTACTO = prompt('Pon el email del nuevo contacto')
+      const NOMBRE_NUEVO_CONTACTO = prompt(
+        'Pon el nombre del nuevo contacto',
+        'Escribe aquí el nombre'
+      )
+      const TLF_NUEVO_CONTACTO = prompt(
+        'Pon el teléfono del nuevo contacto',
+        'Escribe aquí el teléfono'
+      )
+      const EMAIL_NUEVO_CONTACTO = prompt(
+        'Pon el email del nuevo contacto',
+        'Escribe aquí el email'
+      )
       const NUEVO_CONTACTO = {
         nombre: NOMBRE_NUEVO_CONTACTO,
         tlf: TLF_NUEVO_CONTACTO,
