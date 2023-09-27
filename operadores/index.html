@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operadores</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1>Operadores</h1>
+    <script>
+      let x = 1
+      let y = ++x
+      let z = y++ + x
+      console.log(x)
+      console.log(y)
+      console.log(z)
+      x += y
+      console.log(x)
+
+      let port = null || 5000 // TANTO PARA UNDEFINED COMO NULL
+      console.log(port)
+      port = null ?? 5000 // TANTO PARA UNDEFINED COMO NULL
+      console.log(port)
+
+      // TERNARY OPERATOR
+      console.log(`Port ${port === 5000 ? 'es' : 'no es '} 5000`) // Es 5000
+
+      // Precedencia de operadores
+      let year = 2050
+      let newYear = (year = 2051)
+      console.log(year, newYear) // Ambos son 2051
+
+      // Conversiones implicitas
+      const STR1 = '42' + 1
+      console.log(STR1) //43
+      console.log(typeof STR1) //43
+
+      const STR2 = '42' - 1
+      console.log(STR2) //41
+      console.log(typeof STR2) //41
+
+      const valor1 = '5'
+      const valor2 = 9
+      console.log(valor1 + valor2) //59
+
+      console.log(0 == true) //76
+      console.log(0.1e1 == true) //76
+      console.log('false' == false) //76
+    </script>
+  </body>
+</html>
