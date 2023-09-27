@@ -30,33 +30,56 @@
         email: 'risus.Quisque@urna.ca'
       })
 
-      const NOMBRE_NUEVO_CONTACTO = prompt(
-        'Pon el nombre del nuevo contacto',
-        'Escribe aquí el nombre'
-      )
-      const TLF_NUEVO_CONTACTO = prompt(
-        'Pon el teléfono del nuevo contacto',
-        'Escribe aquí el teléfono'
-      )
-      const EMAIL_NUEVO_CONTACTO = prompt(
-        'Pon el email del nuevo contacto',
-        'Escribe aquí el email'
-      )
-      const NUEVO_CONTACTO = {
-        nombre: NOMBRE_NUEVO_CONTACTO,
-        tlf: TLF_NUEVO_CONTACTO,
-        email: EMAIL_NUEVO_CONTACTO
-      }
-      CONTACTOS.push(NUEVO_CONTACTO)
+      const OPCION = prompt('¿Qué quieres hacer? (primero, ultimo, nuevo)')
+      switch (OPCION) {
+        case 'primero':
+          const CONTACTO1 = CONTACTOS[0]
+          mostrar(CONTACTO1)
+          break
+        case 'ultimo':
+          const ULTIMO_CONTACTO = CONTACTOS[CONTACTOS.length - 1]
+          mostrar(ULTIMO_CONTACTO)
+          break
+        case 'nuevo':
+          const NOMBRE_NUEVO_CONTACTO = prompt(
+            'Pon el nombre del nuevo contacto',
+            'Escribe aquí el nombre'
+          )
+          const TLF_NUEVO_CONTACTO = prompt(
+            'Pon el teléfono del nuevo contacto',
+            'Escribe aquí el teléfono'
+          )
+          const EMAIL_NUEVO_CONTACTO = prompt(
+            'Pon el email del nuevo contacto',
+            'Escribe aquí el email'
+          )
+          if (
+            [
+              NOMBRE_NUEVO_CONTACTO,
+              TLF_NUEVO_CONTACTO,
+              EMAIL_NUEVO_CONTACTO
+            ].includes('')
+          ) {
+            console.log('No has rellenado alguno de los campos, mal hecho')
+            break
+          }
+          const NUEVO_CONTACTO = {
+            nombre: NOMBRE_NUEVO_CONTACTO,
+            tlf: TLF_NUEVO_CONTACTO,
+            email: EMAIL_NUEVO_CONTACTO
+          }
+          CONTACTOS.push(NUEVO_CONTACTO)
+          break
 
-      const CONTACTO1 = CONTACTOS[0]
-      console.log(CONTACTO1.nombre, CONTACTO1.tlf, CONTACTO1.email)
-      const ULTIMO_CONTACTO = CONTACTOS[CONTACTOS.length - 1]
-      console.log(
-        ULTIMO_CONTACTO.nombre,
-        ULTIMO_CONTACTO.tlf,
-        ULTIMO_CONTACTO.email
-      )
+        default:
+          console.log(
+            'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, nuevo)'
+          )
+          break
+      }
+      function mostrar(contacto) {
+        console.log(contacto.nombre, contacto.tlf, contacto.email)
+      }
     </script>
   </body>
 </html>
