@@ -30,6 +30,16 @@
         email: 'risus.Quisque@urna.ca'
       })
 
+      const nombreNuevoContacto = prompt('Pon el nombre del nuevo contacto')
+      const tlfNuevoContacto = prompt('Pon el teléfono del nuevo contacto')
+      const emailNuevoContacto = prompt('Pon el email del nuevo contacto')
+      const nuevoContacto = {
+        nombre: nombreNuevoContacto,
+        tlf: tlfNuevoContacto,
+        email: emailNuevoContacto
+      }
+      contactos.push(nuevoContacto)
+
       const contacto1 = contactos[0]
       console.log(contacto1.nombre, contacto1.tlf, contacto1.email)
       const contacto2 = contactos[contactos.length - 1]
