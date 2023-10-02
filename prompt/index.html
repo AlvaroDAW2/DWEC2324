@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt</title>
+  </head>
+  <body>
+    <script>
+      const NOMBRE = prompt('Escribe tu nombre', 'Escribe aquí tu nombre')
+      console.log('Bienvenido a la web ' + NOMBRE)
+      console.log(`Bienvenido a la web ${NOMBRE}`)
+      console.log(`Tipo de variable "NOMBRE": ${typeof NOMBRE}`)
+      console.log(`Longitud: ${NOMBRE.length} caracteres`)
+
+      alert(
+        `Hola ${NOMBRE}, ${
+          confirm('¿Eres un alumno de nuestra clase?')
+            ? 'veo que eres de clase, que felicidad'
+            : 'no pertecenes a esta clase, deberias marcharte'
+        }`
+      )
+    </script>
+  </body>
+</html>

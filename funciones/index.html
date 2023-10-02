@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function sumar() {
+        let suma = 0
+        for (let i = 0; i < arguments.length; i++) {
+          suma += arguments[i]
+        }
+        console.log(suma)
+      }
+
+      sumar(2, 6, 10)
+    </script>
+  </body>
+</html>
