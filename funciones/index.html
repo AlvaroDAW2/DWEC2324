@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Funciones</title>
   </head>
   <body>
     <script>
-      function sumar() {
-        let suma = 0
-        for (let i = 0; i < arguments.length; i++) {
-          suma += arguments[i]
+      const body = document.body
+
+      let res = (base, exponente) => {
+        let resultado = 1
+        for (
+          let i = 1;
+          i <= (exponente >= 0 ? exponente : exponente * -1);
+          i++
+        ) {
+          resultado *= base
         }
-        console.log(suma)
+        return exponente > 0 ? resultado : 1 / resultado
       }
 
-      sumar(2, 6, 10)
+      const base = prompt('Escribe la base')
+      const exponente = prompt('Escribe el exponente')
+      body.append(`Resultado: ${res(base, exponente)}`)
     </script>
   </body>
 </html>
