@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La Peliculera</title>
+  </head>
+  <body>
+    <h1>La Peliculera</h1>
+    <script>
+      const pedirValor = (label, tipo = 'string') => {
+        let valor, error
+        while (!valor) {
+          valor = prompt(`${error ? error : ''}Inserte su ${label}, por favor`)
+          error = `No ha introducido bien su ${label}\n`
+          if (tipo === 'numero' && isNaN(parseInt(valor))) valor = null
+        }
+        return valor
+      }
+      const NOMBRE_CLIENTE = pedirValor('nombre')
+      const EDAD_CLIENTE = pedirValor('edad', 'numero')
+
+      // Cartelera
+      const CARTELERA = [
+        '1.Spider Man',
+        '2.Superman',
+        '3.Dragon Ball Super',
+        '4.La era del hielo',
+        '5.18videos'
+      ]
+
+      let regalos = []
+      let descuento = 0
+
+      const pedirPelicula = () => {
+        let pelicula, error
+        while (!pelicula || error) {
+          let mensaje = error ? error + '\n' : '' + 'Escoge una película:\n'
+          for (let i = 0; i < CARTELERA.length; i++) {
+            mensaje += CARTELERA[i] + '\n'
+          }
+          pelicula = prompt(mensaje)
+          if (!CARTELERA[pelicula - 1]) {
+            error = 'La pelicula debe ser una de las posibles.'
+            continue
+          } else if (EDAD_CLIENTE <= 17 && pelicula == 5) {
+            error = 'Debes ser mayor de edad para ver esa pelicula.'
+            continue
+          } else if (EDAD_CLIENTE <= 17) {
+            descuento = 50
+            regalos = ['Caramelos', 'Refresco']
+          } else if (EDAD_CLIENTE <= 25) {
+            regalos = ['Palomitas', 'Perrito', 'Refresco']
+          } else if (EDAD_CLIENTE <= 35) {
+            descuento = 10
+            regalos = ['Perrito', 'Refresco']
+          } else {
+            descuento = 20
+            regalos = ['Agua']
+          }
+          error = null
+        }
+        return pelicula
+      }
+
+      const calcularDescuento = PRECIO => PRECIO - (PRECIO * descuento) / 100
+
+      const PELICULA = pedirPelicula()
+      const PRECIO = calcularDescuento(8.5)
+
+      console.log(
+        NOMBRE_CLIENTE,
+        '\nPelícula: ',
+        CARTELERA[PELICULA - 1],
+        '\nRegalos: ',
+        regalos.toString(),
+        '\nPrecio: ',
+        PRECIO
+      )
+    </script>
+  </body>
+</html>
