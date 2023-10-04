@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Funciones</title>
+    <link rel="stylesheet" href="../css/styles.css" type="text/css" />
   </head>
   <body>
     <script>
@@ -11,11 +12,7 @@
 
       let res = (base, exponente) => {
         let resultado = 1
-        for (
-          let i = 1;
-          i <= (exponente >= 0 ? exponente : exponente * -1);
-          i++
-        ) {
+        for (let i = 0; i < (exponente >= 0 ? exponente : -exponente); i++) {
           resultado *= base
         }
         return exponente > 0 ? resultado : 1 / resultado
