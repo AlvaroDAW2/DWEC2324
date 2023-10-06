@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Switch - Mayor de Edad</title>
+  </head>
+  <body>
+    <h1>Switch - Mayor de Edad</h1>
+    <script>
+      const BODY = document.body
+      const PARRAFO = document.createElement('p')
+      const EDAD = prompt('Introduce tu edad')
+      switch (true) {
+        case EDAD >= 18:
+          PARRAFO.textContent = 'Eres mayor de edad'
+          break
+        default:
+          PARRAFO.textContent = 'Eres menor de edad'
+          break
+      }
+      BODY.append(PARRAFO)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dias de la semana</title>
+  </head>
+  <body>
+    <h1>Dias de la semana</h1>
+    <p id="aqui"></p>
+    <script>
+      const dias = [
+        'Lunes ♥️',
+        'Martes ♥️',
+        'Miercoles ♥️',
+        'Jueves ♥️',
+        'Viernes ♥️',
+        'Sabado ♥️',
+        'Domingo ♥️'
+      ]
+      dias[1] = Date()
+      document.getElementById('aqui').innerHTML = dias
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio Socios</title>
+  </head>
+  <body>
+    <h1>Ejercicio Socios</h1>
+    <script>
+      const BODY = document.body
+      const socios = []
+      const NUMERO_SOCIOS = 10
+      for (let i = 0; i < NUMERO_SOCIOS; i++) {
+        socios.push(prompt(`Introduce el socio nº ${i}`))
+      }
+
+      const crearParrafo = texto => {
+        const p = document.createElement('p')
+        p.textContent = texto
+        return p
+      }
+      BODY.append(crearParrafo(socios))
+      BODY.append(crearParrafo(`Numero de socios: ${socios.length}`))
+      BODY.append(crearParrafo([...socios].sort()))
+      BODY.append(crearParrafo([...socios].reverse()))
+    </script>
+  </body>
+</html>

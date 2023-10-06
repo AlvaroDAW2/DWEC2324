@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego - Adivinar Numero</title>
+    <link rel="stylesheet" href="../css/styles.css" type="text/css" />
+  </head>
+  <body>
+    <h1>Juego - Adivinar Numero</h1>
+    <script>
+      const BODY = document.body
+      const NUMERO_ADIVINAR = Math.ceil(Math.random() * 10)
+      let numeroUsuario
+      let numeroIntentos = 0
+      let direccion
+      while (numeroUsuario !== NUMERO_ADIVINAR) {
+        numeroUsuario = Number(
+          prompt(
+            `${
+              numeroIntentos !== 0
+                ? `${
+                    direccion ? 'El número es ' + direccion : ''
+                  }, vuelve a probar.\n`
+                : ''
+            }Introduce el número a adivinar:`
+          )
+        )
+        direccion = NUMERO_ADIVINAR > numeroUsuario ? 'mayor' : 'menor'
+        numeroIntentos++
+      }
+
+      const RESULTADO = document.createElement('p')
+      RESULTADO.textContent = `GENIAL, HAS ADIVINADO EL NUMERO ${NUMERO_ADIVINAR}! Nº Intentos: ${numeroIntentos}`
+      RESULTADO.style = 'color: green; font-size: 2rem;'
+      BODY.append(RESULTADO)
+    </script>
+  </body>
+</html>
