@@ -40,7 +40,9 @@
         alert(saludo)
       }
       saludar()
-      alert(saludo)
+      /*alert(saludo) -> Si descomentamos esta línea el código parará de ejecutarse al lanzar
+      un error ya que la variable saludo está declarada dentro de una función y debemos
+      recordar que las variables declaradas con 'var' tienen ámbito de bloque, es decir que pueden ser utilizadas en la función donde se declaran, al intentar llamarla desde fuera de su función lanza un error al no poder acceder a ella.*/
 
       var despedida = 'Adiós'
       function despedir() {
@@ -63,8 +65,6 @@
         alert(variableGlobal)
       }
       alert(variableGlobal)
-
-      // Las variables automáticamente globales son aquellas variables
     </script>
   </head>
   <body>

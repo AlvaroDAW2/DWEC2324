@@ -4,21 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>La Peliculera</title>
+    <link rel="stylesheet" href="../css/styles.css" type="text/css" />
   </head>
   <body>
     <h1>La Peliculera</h1>
     <script>
-      const pedirValor = (label, tipo = 'string') => {
+      const pedirValor = (label, tipo) => {
         let valor, error
         while (!valor) {
           valor = prompt(`${error ? error : ''}Inserte su ${label}, por favor`)
           error = `No ha introducido bien su ${label}\n`
-          if (tipo === 'numero' && isNaN(parseInt(valor))) valor = null
+          if (tipo instanceof Number && isNaN(parseInt(valor))) valor = null
         }
         return valor
       }
-      const NOMBRE_CLIENTE = pedirValor('nombre')
-      const EDAD_CLIENTE = pedirValor('edad', 'numero')
+      const NOMBRE_CLIENTE = pedirValor('nombre', String)
+      const EDAD_CLIENTE = pedirValor('edad', Number)
 
       // Cartelera
       const CARTELERA = [
@@ -35,10 +36,11 @@
       const pedirPelicula = () => {
         let pelicula, error
         while (!pelicula || error) {
-          let mensaje = error ? error + '\n' : '' + 'Escoge una película:\n'
-          for (let i = 0; i < CARTELERA.length; i++) {
-            mensaje += CARTELERA[i] + '\n'
-          }
+          let mensaje = error
+            ? error + '\n'
+            : '' +
+              'Escoge una película:\n' +
+              CARTELERA.toString().replaceAll(',', '\n')
           pelicula = prompt(mensaje)
           if (!CARTELERA[pelicula - 1]) {
             error = 'La pelicula debe ser una de las posibles.'
@@ -68,15 +70,17 @@
       const PELICULA = pedirPelicula()
       const PRECIO = calcularDescuento(8.5)
 
-      console.log(
-        NOMBRE_CLIENTE,
-        '\nPelícula: ',
-        CARTELERA[PELICULA - 1],
-        '\nRegalos: ',
-        regalos.toString(),
-        '\nPrecio: ',
-        PRECIO
-      )
+      const BODY = document.body
+      const crearParrafo = texto => {
+        const p = document.createElement('p')
+        p.textContent = texto
+        return p
+      }
+
+      BODY.append(crearParrafo(NOMBRE_CLIENTE))
+      BODY.append(crearParrafo('Película: ' + CARTELERA[PELICULA - 1]))
+      BODY.append(crearParrafo('Regalos: ' + regalos.toString()))
+      BODY.append(crearParrafo('Precio: ' + PRECIO))
     </script>
   </body>
 </html>
