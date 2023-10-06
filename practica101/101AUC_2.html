@@ -35,6 +35,7 @@
       Pon un ejemplo
       */
 
+      // 1.
       function saludar() {
         var saludo = 'Hola'
         alert(saludo)
@@ -44,6 +45,7 @@
       un error ya que la variable saludo está declarada dentro de una función y debemos
       recordar que las variables declaradas con 'var' tienen ámbito de bloque, es decir que pueden ser utilizadas en la función donde se declaran, al intentar llamarla desde fuera de su función lanza un error al no poder acceder a ella.*/
 
+      // 2.
       var despedida = 'Adiós'
       function despedir() {
         alert(despedida)
@@ -51,6 +53,7 @@
       despedir()
       alert(despedida)
 
+      // 3.
       var mismoNombre = 'Tengo un valor'
       function ambito() {
         var mismoNombre = 'Tengo otro valor diferente'
@@ -59,11 +62,13 @@
       ambito()
       alert(mismoNombre)
 
+      // 4.
       var variableGlobal = 'Soy GLOBAL'
       function mostrarVariableGlobal() {
         var variableGlobal = 'Soy GLOBAL'
         alert(variableGlobal)
       }
+      mostrarVariableGlobal()
       alert(variableGlobal)
     </script>
   </head>
