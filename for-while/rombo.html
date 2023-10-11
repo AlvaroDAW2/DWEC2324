@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rombo con *</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        color-scheme: dark;
+      }
+
+      body {
+        padding: 2rem;
+        min-height: 100dvh;
+        display: grid;
+        place-content: center;
+      }
+      p {
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const ESPACIO = '&nbsp;&nbsp;'
+      const SALTO = '<br />'
+      const FORMA = '*'
+      const NUMERO_FILAS = prompt('Escribe el número de filas')
+      const BODY = document.body
+
+      const calcularNumeroFormas = fila => fila * 2 - 1
+
+      const calcularEspacio = fila =>
+        calcularNumeroFormas(Number(NUMERO_FILAS)) - fila - 1
+
+      let resultado = ''
+      for (let i = 1; i <= NUMERO_FILAS; i++) {
+        resultado +=
+          ESPACIO.repeat(calcularEspacio(i)) +
+          FORMA.repeat(calcularNumeroFormas(i)) +
+          SALTO
+      }
+
+      // Pintar al reves
+      for (let i = NUMERO_FILAS - 1; i > 0; i--) {
+        resultado +=
+          ESPACIO.repeat(calcularEspacio(i)) +
+          FORMA.repeat(calcularNumeroFormas(i)) +
+          SALTO
+      }
+
+      BODY.innerHTML = `<p>${resultado}</p>`
+    </script>
+  </body>
+</html>
