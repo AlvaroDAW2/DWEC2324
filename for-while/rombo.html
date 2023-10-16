@@ -40,9 +40,13 @@
 
       let resultado = ''
       for (let i = 1; i <= NUMERO_FILAS; i++) {
+        if (i == 1)
+          resultado += ESPACIO.repeat(calcularEspacio(i)) + ' ⤊' + SALTO
         resultado +=
           ESPACIO.repeat(calcularEspacio(i)) +
+          (i != NUMERO_FILAS ? '/' : '|') +
           FORMA.repeat(calcularNumeroFormas(i)) +
+          (i != NUMERO_FILAS ? '\\' : '|') +
           SALTO
       }
 
@@ -50,8 +54,12 @@
       for (let i = NUMERO_FILAS - 1; i > 0; i--) {
         resultado +=
           ESPACIO.repeat(calcularEspacio(i)) +
+          '\\' +
           FORMA.repeat(calcularNumeroFormas(i)) +
+          '/' +
           SALTO
+        if (i == 1)
+          resultado += ESPACIO.repeat(calcularEspacio(i)) + ' ⤋' + SALTO
       }
 
       BODY.innerHTML = `<p>${resultado}</p>`
