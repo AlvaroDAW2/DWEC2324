@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+      Solicitar una frase desde teclado, almacenar cada palabra en un elemento de
+      un array y mostrar los siguientes datos:
+        • La primera palabra de la frase.
+        • La última palabra de la frase.
+        • El número de palabras de la frase.
+      */
+
+      const frase = prompt('Escribe una frase')
+      if (!isNaN(frase)) {
+        alert('Me debes pasar una frase')
+        throw new Error('Has introducido en el prompt algo que no es una frase')
+      }
+
+      const palabrasFrase = frase.split(' ')
+
+      console.log(`
+      Primera palabra: ${palabrasFrase[0]}
+      Ultima palabra: ${palabrasFrase[palabrasFrase.length - 1]}
+      Número de palabras: ${palabrasFrase.length}
+      `)
+    </script>
+  </body>
+</html>
