@@ -8,41 +8,104 @@
   </head>
   <body>
     <script>
-      /*
-    Realiza una aplicación web que solicite una cadena de texto.
-    El programa debe decir cuántas veces ocurre cada uno de estos patrones
-    sin distinguir mayúsculas y minúsculas: “00” “101”, “ABC”, “H0”.
-    Un carácter puede formar parte de más de un patrón encontrado.
-    Por ejemplo: En la cadena “000” el patrón “00” aparece dos veces
-    (una empieza en la posición 0 y otra empieza en la posición 1).
-    Internamente el programa realizará la cuenta de patrones con una
-    función definida como function numeroPatrones(texto) que
-    devolverá un número entero con el número de patrones encontrados.
-    Ejemplo:
-    1110101000ABCHO
-    */
+      function pedirTexto() {
+        let error = false
+        let texto = ''
+        do {
+          texto = prompt(
+            !error
+              ? 'Introduce una cadena de texto'
+              : 'Por favor, debes introducir algo'
+          )
+          if (texto === '') error = true
+          else error = false
+        } while (error)
 
-      function numeroPatrones(texto) {
-        const patronesBuscar = ['00', '101', 'ABC', 'H0']
-        let patrones = 0
+        return texto
+      }
 
-        patronesBuscar.forEach(patron => {
-          let copiaTexto = texto
-          while (copiaTexto.search(patron) != -1) {
-            copiaTexto = copiaTexto.substring(copiaTexto.indexOf(patron) + 1)
-            patrones++
+      function pedirPatrones() {
+        const patrones = []
+        let patron = ''
+        let error = ''
+        let salir = false
+        while (!salir) {
+          patron = prompt(
+            !error
+              ? 'Escribe un patron, cuando quieras parar escribe "salir"'
+              : error
+          )
+
+          // Validaciones
+          if (patron.toUpperCase() === 'SALIR') {
+            salir = true
+            continue
+          } // Cuando pone 'salir' sale del bucle
+          if (patron === '')
+            // Si no pone nada entonces no añadira nada y pondra un mensaje de error
+            error =
+              'Has escrito un patron vacio, por favor escribe algun patrón'
+          else {
+            patrones.push({
+              patron,
+              repetido: 0
+            })
+            error = ''
           }
-        })
+        }
+
         return patrones
       }
 
-      const texto = prompt('Introduce una cadena de texto')
+      function numeroPatrones(texto, patronesBuscar) {
+        patronesBuscar.forEach(patron => {
+          let copiaTexto = texto
+          while (copiaTexto.includes(patron.patron)) {
+            copiaTexto = copiaTexto.substring(
+              copiaTexto.indexOf(patron.patron) + 1
+            )
+            patron.repetido++
+          }
+        })
+        const total = patronesBuscar.reduce((accumulated, current) => {
+          return accumulated + current.repetido
+        }, 0)
 
+        return {
+          patronesBuscar,
+          total
+        }
+      }
+
+      // Ponemos en acción las funciones
+      const texto = pedirTexto()
+      const patrones = pedirPatrones()
+
+      /* 
+      Recordemos que numeroPatrones() devuelve un objeto que dentro tiene el numero total
+      de patrones encontrados y un array 'patronesBuscar' con objetos de la siguiente forma:
+      {
+        patron: string,
+        repetido: number
+      }[]
+      */
+      const { patronesBuscar, total } = numeroPatrones(texto, patrones)
+
+      // Pintamos en pantalla
       const body = document.body
       const parrafo = document.createElement('p')
-      parrafo.innerText = `Patrones encontrados: ${numeroPatrones(texto)}`
+      const lista = document.createElement('ul')
+      parrafo.innerText = `Patrones encontrados en '${texto}': ${total}`
       parrafo.style.fontSize = '2rem'
       body.append(parrafo)
+      body.append(lista)
+
+      patronesBuscar.forEach(patron => {
+        const elemLista = document.createElement('li')
+        elemLista.innerText = `Patron '${patron.patron}': ${patron.repetido}`
+        elemLista.style.fontSize = '2rem'
+        lista.append(elemLista)
+      })
     </script>
   </body>
 </html>

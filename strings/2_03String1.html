@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Objetos nativos. String</title>
+  </head>
+
+  <body>
+    <script>
+      //INSTANCIACIÓN:
+      //Varias formas de instanciar
+      let daw = 'Desarrollo de aplicaciones web'
+      let dam = 'Desarrollo de aplicaciones multiplataforma'
+      let asir = "Administración de 'Sistemas Informáticos' en Red" //También al revés
+      let smr = 'Sistemas "Microinformáticos" y Redes' //pintar comillas en un texto
+      let ciclos = new String('') // no recomendable ??
+
+      //CONCATENACIÓN DE CADENAS (Para trabajar con cadenas largas)
+      ciclos += 'Hay 3 ciclos de Grado Superior: \n' // n salto de línea
+      ciclos += daw + ', ' + dam + ' y ' + asir + '\n'
+      ciclos += ' y 1 ciclo de Grado Medio: \n'
+      ciclos += smr
+
+      alert(ciclos)
+
+      // PROPIEDADES
+      // lenght
+      alert('El tamaño del texto es: ' + ciclos.length)
+
+      // charAt
+      alert(ciclos.charAt(7))
+
+      // indexOf & lastIndexOf
+      alert(ciclos.indexOf('a'))
+      alert(ciclos.lastIndexOf('a'))
+
+      // localCompare
+      alert(daw.localeCompare(dam)) // la 'm' esta antes que la 'w'
+
+      // Include
+      alert(ciclos.includes(daw))
+
+      // startsWith & endsWith -> no hace falta explicar para que sirven no ? 🤣
+
+      // codepoint
+      const miTexto = 'Mano'
+      alert(miTexto.codePointAt(0)) // -> 77 que es la 'M'
+      alert(miTexto.codePointAt(0).toString(16)) // -> '4d' (hexadecimal)
+      alert(String.fromCodePoint(77)) // -> 'M'
+    </script>
+  </body>
+</html>
