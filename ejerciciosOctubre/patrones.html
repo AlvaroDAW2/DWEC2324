@@ -58,6 +58,7 @@
       }
 
       function numeroPatrones(texto, patronesBuscar) {
+        let total = 0
         patronesBuscar.forEach(patron => {
           let copiaTexto = texto
           while (copiaTexto.includes(patron.patron)) {
@@ -65,11 +66,9 @@
               copiaTexto.indexOf(patron.patron) + 1
             )
             patron.repetido++
+            total++
           }
         })
-        const total = patronesBuscar.reduce((accumulated, current) => {
-          return accumulated + current.repetido
-        }, 0)
 
         return {
           patronesBuscar,
