@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perimetro</title>
+  </head>
+  <body>
+    <h1>Perimetro de un Rectangulo</h1>
+    <script>
+      function pedirNumero2Decimales() {
+        let numero
+        let error = false
+        do {
+          numero = prompt(
+            error
+              ? 'Por favor debes introducir 2 decimales'
+              : 'Introduce un numero con dos decimales'
+          )
+          if (!numero.includes('.') || numero.split('.')[1].length !== 2)
+            error = true
+          else error = false
+        } while (error)
+        return Number(numero)
+      }
+
+      function perimetroRectangulo(a, b) {
+        return (2 * (a + b)).toFixed(2)
+      }
+
+      let x = pedirNumero2Decimales()
+      let y = pedirNumero2Decimales()
+
+      const body = document.body
+      const parrafo = document.createElement('p')
+      parrafo.innerText = perimetroRectangulo(x, y)
+      body.append(parrafo)
+    </script>
+  </body>
+</html>
