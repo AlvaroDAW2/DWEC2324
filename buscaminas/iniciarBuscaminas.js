@@ -1,7 +1,7 @@
 // DOM
 const tabla = document.querySelector('.tabla')
 
-function generarTableroJS() {
+function dibujarTableroHTML() {
   // TODO: VALIDAR LOS DATOS
   const ancho = prompt('Dame el ancho pls:')
   const alto = prompt('Dame el alto pls:')
@@ -20,4 +20,4 @@ function generarTableroJS() {
   }
 }
 
-generarTableroJS()
+dibujarTableroHTML()

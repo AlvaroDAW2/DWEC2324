@@ -28,7 +28,39 @@ const productos = [
 
 const prodOrdenPorNombre = productos =>
   productos.sort((p1, p2) => p1.nombre.localeCompare(p2.nombre))
+
 const prodOrdenPorPrecio = productos =>
   productos.sort((p1, p2) => p2.precio - p1.precio)
 
+const prodPrecioTotal = productos =>
+  productos
+    .reduce((accumulated, current) => accumulated + current.importe()) // Sacar el cumulo de importes
+    .toFixed(2) // Dos decimales
+
+// const prodConMenosUnidades = (productos, unidades) =>
+//   productos.filter(p => p.unidades < unidades)
+
+// const prodLista = productos =>
+//   '- ' + productos.map(p => p.getInfo()).join('\n- ')
+
+const prodConMenosUnidades = (productos, unidades) => {
+  const pConMenosUnidades = []
+  productos.forEach(p => {
+    if (p.unidades < unidades) pConMenosUnidades.push(p)
+  })
+  return pConMenosUnidades
+}
+
+const prodLista = productos => {
+  let resultado = ''
+  productos.forEach(p => {
+    resultado += `- ${p.getInfo()}\n`
+  })
+  return resultado
+}
+
+console.log(prodOrdenPorNombre(productos))
 console.log(prodOrdenPorPrecio(productos))
+console.log(prodPrecioTotal(productos))
+console.log(prodConMenosUnidades(productos, 4))
+console.log(prodLista(productos))
