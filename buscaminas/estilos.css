@@ -19,20 +19,18 @@ body {
   margin: 0 auto;
   border: blue 1px solid;
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
   place-items: center;
-  gap: 2rem;
 }
 
 button {
   background-color: red;
-  border: darkred 1px solid;
+  border: darkred 3px solid;
   width: 6rem;
   aspect-ratio: 1/1;
   font-size: 3rem;
   display: grid;
   place-content: center;
+  user-select: none;
 
   &:hover {
     background-color: lightcoral;
