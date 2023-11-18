@@ -66,6 +66,20 @@
             emailNuevoContacto
           )
         },
+        ordenar: () => {
+          let ordenarPor = prompt(
+            'Elige ordenar por: (nombre, tlf, email)',
+            'Escribe aquí el email'
+          )
+          if (
+            !['nombre', 'tlf', 'email'].includes(ordenarPor.toLocaleLowerCase())
+          ) {
+            console.log('¡Has seleccionado mal! (nombre, tlf, email)')
+            return
+          }
+
+          ordenar(contactos, ordenarPor)
+        },
         salir: () => (salir = true)
       }
 
@@ -75,7 +89,7 @@
       let salir = false
       while (!salir) {
         let opcion = prompt(
-          '¿Qué quieres hacer? (primero, ultimo, todos, nuevo, salir)'
+          '¿Qué quieres hacer? (primero, ultimo, todos, nuevo, ordenar, salir)'
         )
 
         try {
@@ -83,7 +97,7 @@
         } catch (error) {
           // En caso de que no ponga una opcion disponible
           console.log(
-            'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, todos, nuevo, salir)'
+            'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, todos, nuevo, ordenar, salir)'
           )
         }
       }
@@ -131,6 +145,20 @@
         contactos.push(nuevoContacto)
         console.log('NUEVO CONTACTO:')
         showContact(contactos, contactos.length - 1) // Al ser nuevo contacto, es el ultimo de la lista
+      }
+
+      function ordenar(contactos, valor) {
+        if (!contactos instanceof Array) {
+          console.log('La lista de contactos proporcionada debe ser un Array')
+          return
+        }
+        let tipoValor = typeof contactos[0][valor] // Obtengo el tipo de valor para saber si hay que ordenarlo como un numero o como un string
+
+        contactos.sort((contacto1, contacto2) => {
+          if (tipoValor === Number) return contacto1[valor] - contacto2[valor]
+          else return contacto1[valor].localeCompare(contacto2[valor])
+        })
+        showAllContacts(contactos) // Mostramos todos los contactos (ya ordenados)
       }
     </script>
   </body>
