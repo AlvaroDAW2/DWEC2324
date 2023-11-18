@@ -7,7 +7,7 @@
   </head>
   <body>
     <script>
-      const CONTACTOS = [
+      const contactos = [
         {
           nombre: 'Maxwell Wright',
           tlf: '(0191) 719 6495',
@@ -24,52 +24,52 @@
           email: 'libero@convallis.edu'
         }
       ]
-      CONTACTOS.push({
+      contactos.push({
         nombre: 'Maisie Haley',
         tlf: '0913 531 3030',
         email: 'risus.Quisque@urna.ca'
       })
 
-      const OPCION = prompt('¿Qué quieres hacer? (primero, ultimo, nuevo)')
-      switch (OPCION) {
+      let opcion = prompt('¿Qué quieres hacer? (primero, ultimo, nuevo)')
+      switch (opcion) {
         case 'primero':
-          const CONTACTO1 = CONTACTOS[0]
-          mostrar(CONTACTO1)
+          let contacto1 = contactos[0]
+          mostrar(contacto1)
           break
         case 'ultimo':
-          const ULTIMO_CONTACTO = CONTACTOS[CONTACTOS.length - 1]
-          mostrar(ULTIMO_CONTACTO)
+          let ultimoContacto = contactos[contactos.length - 1]
+          mostrar(ultimoContacto)
           break
         case 'nuevo':
-          const NOMBRE_NUEVO_CONTACTO = prompt(
+          let nombreNuevoContacto = prompt(
             'Pon el nombre del nuevo contacto',
             'Escribe aquí el nombre'
           )
-          const TLF_NUEVO_CONTACTO = prompt(
+          let tlfNuevoContacto = prompt(
             'Pon el teléfono del nuevo contacto',
             'Escribe aquí el teléfono'
           )
-          const EMAIL_NUEVO_CONTACTO = prompt(
+          let emailNuevoContacto = prompt(
             'Pon el email del nuevo contacto',
             'Escribe aquí el email'
           )
           if (
             [
-              NOMBRE_NUEVO_CONTACTO,
-              TLF_NUEVO_CONTACTO,
-              EMAIL_NUEVO_CONTACTO
+              nombreNuevoContacto,
+              tlfNuevoContacto,
+              emailNuevoContacto
             ].includes('')
           ) {
             console.log('No has rellenado alguno de los campos, mal hecho')
             break
           }
-          const NUEVO_CONTACTO = {
-            nombre: NOMBRE_NUEVO_CONTACTO,
-            tlf: TLF_NUEVO_CONTACTO,
-            email: EMAIL_NUEVO_CONTACTO
+          let nuevoContacto = {
+            nombre: nombreNuevoContacto,
+            tlf: tlfNuevoContacto,
+            email: emailNuevoContacto
           }
-          CONTACTOS.push(NUEVO_CONTACTO)
-          mostrar(NUEVO_CONTACTO)
+          contactos.push(nuevoContacto)
+          mostrar(nuevoContacto)
           break
 
         default:
