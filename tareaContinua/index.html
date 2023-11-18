@@ -7,7 +7,7 @@
   </head>
   <body>
     <script>
-      const CONTACTOS = [
+      const contactos = [
         {
           nombre: 'Maxwell Wright',
           tlf: '(0191) 719 6495',
@@ -24,19 +24,19 @@
           email: 'libero@convallis.edu'
         }
       ]
-      CONTACTOS.push({
+      contactos.push({
         nombre: 'Maisie Haley',
         tlf: '0913 531 3030',
         email: 'risus.Quisque@urna.ca'
       })
 
-      const CONTACTO1 = CONTACTOS[0]
-      console.log(CONTACTO1.nombre, CONTACTO1.tlf, CONTACTO1.email)
-      const ULTIMO_CONTACTO = CONTACTOS[CONTACTOS.length - 1]
+      let contacto1 = contactos[0]
+      console.log(contacto1.nombre, contacto1.tlf, contacto1.email)
+      let ultimoContacto = contactos[contactos.length - 1]
       console.log(
-        ULTIMO_CONTACTO.nombre,
-        ULTIMO_CONTACTO.tlf,
-        ULTIMO_CONTACTO.email
+        ultimoContacto.nombre,
+        ultimoContacto.tlf,
+        ultimoContacto.email
       )
     </script>
   </body>
