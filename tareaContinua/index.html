@@ -30,54 +30,72 @@
         email: 'risus.Quisque@urna.ca'
       })
 
-      let opcion = prompt('¿Qué quieres hacer? (primero, ultimo, nuevo)')
-      switch (opcion) {
-        case 'primero':
-          let contacto1 = contactos[0]
-          mostrar(contacto1)
-          break
-        case 'ultimo':
-          let ultimoContacto = contactos[contactos.length - 1]
-          mostrar(ultimoContacto)
-          break
-        case 'nuevo':
-          let nombreNuevoContacto = prompt(
-            'Pon el nombre del nuevo contacto',
-            'Escribe aquí el nombre'
-          )
-          let tlfNuevoContacto = prompt(
-            'Pon el teléfono del nuevo contacto',
-            'Escribe aquí el teléfono'
-          )
-          let emailNuevoContacto = prompt(
-            'Pon el email del nuevo contacto',
-            'Escribe aquí el email'
-          )
-          if (
-            [
-              nombreNuevoContacto,
-              tlfNuevoContacto,
-              emailNuevoContacto
-            ].includes('')
-          ) {
-            console.log('No has rellenado alguno de los campos, mal hecho')
+      let salir = false
+      while (!salir) {
+        let opcion = prompt(
+          '¿Qué quieres hacer? (primero, ultimo, todos, nuevo, salir)'
+        )
+        switch (opcion.toLowerCase()) {
+          case 'primero':
+            let contacto1 = contactos[0]
+            console.log('PRIMER CONTACTO:')
+            mostrar(contacto1)
             break
-          }
-          let nuevoContacto = {
-            nombre: nombreNuevoContacto,
-            tlf: tlfNuevoContacto,
-            email: emailNuevoContacto
-          }
-          contactos.push(nuevoContacto)
-          mostrar(nuevoContacto)
-          break
+          case 'ultimo':
+            let ultimoContacto = contactos[contactos.length - 1]
+            console.log('ULTIMO CONTACTO:')
+            mostrar(ultimoContacto)
+            break
+          case 'todos':
+            contactos.forEach((contacto, indice) => {
+              console.log('CONTACTO Nº' + (indice + 1))
+              mostrar(contacto)
+            })
+            break
+          case 'nuevo':
+            let nombreNuevoContacto = prompt(
+              'Pon el nombre del nuevo contacto',
+              'Escribe aquí el nombre'
+            )
+            let tlfNuevoContacto = prompt(
+              'Pon el teléfono del nuevo contacto',
+              'Escribe aquí el teléfono'
+            )
+            let emailNuevoContacto = prompt(
+              'Pon el email del nuevo contacto',
+              'Escribe aquí el email'
+            )
+            if (
+              [
+                nombreNuevoContacto,
+                tlfNuevoContacto,
+                emailNuevoContacto
+              ].includes('')
+            ) {
+              console.log('No has rellenado alguno de los campos, mal hecho')
+              break
+            }
+            let nuevoContacto = {
+              nombre: nombreNuevoContacto,
+              tlf: tlfNuevoContacto,
+              email: emailNuevoContacto
+            }
+            contactos.push(nuevoContacto)
+            console.log('NUEVO CONTACTO:')
+            mostrar(nuevoContacto)
+            break
+          case 'salir':
+            salir = true
+            break
 
-        default:
-          console.log(
-            'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, nuevo)'
-          )
-          break
+          default:
+            console.log(
+              'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, todos, nuevo, salir)'
+            )
+            break
+        }
       }
+
       function mostrar(contacto) {
         console.log(contacto.nombre, contacto.tlf, contacto.email)
       }
