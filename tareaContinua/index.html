@@ -7,6 +7,10 @@
   </head>
   <body>
     <script>
+      /*
+      --------------------- DATOS ---------------------
+      */
+      // Lista de contactos
       const contactos = [
         {
           nombre: 'Maxwell Wright',
@@ -30,74 +34,103 @@
         email: 'risus.Quisque@urna.ca'
       })
 
+      // Lista de opciones
+      const OPCIONES = {
+        // he hecho este objeto de funciones en lugar del switch, aunque realmente el switch me parecia limpio
+        primero: () => {
+          console.log('PRIMER CONTACTO:')
+          showContact(contactos, 0) // Mostrar primer contacto
+        },
+        ultimo: () => {
+          console.log('ULTIMO CONTACTO:')
+          showContact(contactos, contactos.length - 1) // Mostrar ultimo contacto
+        },
+        todos: () => showAllContacts(contactos),
+        nuevo: () => {
+          let nombreNuevoContacto = prompt(
+            'Pon el nombre del nuevo contacto',
+            'Escribe aquí el nombre'
+          )
+          let tlfNuevoContacto = prompt(
+            'Pon el teléfono del nuevo contacto',
+            'Escribe aquí el teléfono'
+          )
+          let emailNuevoContacto = prompt(
+            'Pon el email del nuevo contacto',
+            'Escribe aquí el email'
+          )
+          addNewContact(
+            contactos,
+            nombreNuevoContacto,
+            tlfNuevoContacto,
+            emailNuevoContacto
+          )
+        },
+        salir: () => (salir = true)
+      }
+
+      /*
+      --------------------- Logica de la aplicacion (bucle) ---------------------
+      */
       let salir = false
       while (!salir) {
         let opcion = prompt(
           '¿Qué quieres hacer? (primero, ultimo, todos, nuevo, salir)'
         )
-        switch (opcion.toLowerCase()) {
-          case 'primero':
-            let contacto1 = contactos[0]
-            console.log('PRIMER CONTACTO:')
-            mostrar(contacto1)
-            break
-          case 'ultimo':
-            let ultimoContacto = contactos[contactos.length - 1]
-            console.log('ULTIMO CONTACTO:')
-            mostrar(ultimoContacto)
-            break
-          case 'todos':
-            contactos.forEach((contacto, indice) => {
-              console.log('CONTACTO Nº' + (indice + 1))
-              mostrar(contacto)
-            })
-            break
-          case 'nuevo':
-            let nombreNuevoContacto = prompt(
-              'Pon el nombre del nuevo contacto',
-              'Escribe aquí el nombre'
-            )
-            let tlfNuevoContacto = prompt(
-              'Pon el teléfono del nuevo contacto',
-              'Escribe aquí el teléfono'
-            )
-            let emailNuevoContacto = prompt(
-              'Pon el email del nuevo contacto',
-              'Escribe aquí el email'
-            )
-            if (
-              [
-                nombreNuevoContacto,
-                tlfNuevoContacto,
-                emailNuevoContacto
-              ].includes('')
-            ) {
-              console.log('No has rellenado alguno de los campos, mal hecho')
-              break
-            }
-            let nuevoContacto = {
-              nombre: nombreNuevoContacto,
-              tlf: tlfNuevoContacto,
-              email: emailNuevoContacto
-            }
-            contactos.push(nuevoContacto)
-            console.log('NUEVO CONTACTO:')
-            mostrar(nuevoContacto)
-            break
-          case 'salir':
-            salir = true
-            break
 
-          default:
-            console.log(
-              'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, todos, nuevo, salir)'
-            )
-            break
+        try {
+          OPCIONES[opcion.toLowerCase()]()
+        } catch (error) {
+          // En caso de que no ponga una opcion disponible
+          console.log(
+            'DEBES ELEGIR UNA DE LAS OPCIONES (primero, ultimo, todos, nuevo, salir)'
+          )
         }
       }
 
-      function mostrar(contacto) {
+      /*
+      --------------------- FUNCIONES ---------------------
+      */
+      function showContact(contactos, indiceContacto) {
+        if (!contactos instanceof Array) {
+          console.log('La lista de contactos proporcionada debe ser un Array')
+          return
+        }
+        let contacto = contactos[indiceContacto]
         console.log(contacto.nombre, contacto.tlf, contacto.email)
+      }
+
+      function showAllContacts(contactos) {
+        if (!contactos instanceof Array) {
+          console.log('La lista de contactos proporcionada debe ser un Array')
+          return
+        }
+        contactos.forEach((contacto, indice) => {
+          console.log('CONTACTO Nº' + (indice + 1))
+          showContact(contactos, indice)
+        })
+      }
+
+      function addNewContact(contactos, nombre, tlf, email) {
+        if (!contactos instanceof Array) {
+          console.log('La lista de contactos proporcionada debe ser un Array')
+          return
+        }
+        if ([nombre, tlf, email].includes('')) {
+          console.log(
+            'Alguno de los valores introducidos esta vacio, por favor rellena bien los datos.'
+          )
+          return
+        }
+
+        let nuevoContacto = {
+          nombre,
+          tlf,
+          email
+        }
+        contactos.push(nuevoContacto)
+        console.log('NUEVO CONTACTO:')
+        showContact(contactos, contactos.length - 1) // Al ser nuevo contacto, es el ultimo de la lista
       }
     </script>
   </body>
