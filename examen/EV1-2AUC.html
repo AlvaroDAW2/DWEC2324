@@ -7,34 +7,37 @@
   </head>
   <body>
     <script>
-      const ESPACIO = '&nbsp;&nbsp;';
-      const SALTO_DE_LINEA = '<br />';
+      const ESPACIO = '&nbsp;&nbsp;'
+      const SALTO_DE_LINEA = '<br />'
 
       function crearPiramide(numero) {
+        const INICIO = new Date()
         // El numero maximo es 50 y obviamente no puede ser un numero menor que 1
-        if (numero > 50 || numero < 1) throw new Error('Número inválido, 1-50');
+        if (numero > 50 || numero < 1) throw new Error('Número inválido, 1-50')
 
         // Calculo el tamaño de la cadena con el numero maximo, ya que me ayudara a calcular los espacios
-        let lengthTotal = numero.toString().repeat(numero).length;
+        let lengthTotal = numero.toString().repeat(numero).length
 
         // Hasta que llegue a 0 (no incluido)
         while (numero >= 1) {
-          let cadenaResultado = numero.toString().repeat(numero); // Hacemos la cadena con el numero tantas veces repetido
-          let espacios = (lengthTotal - cadenaResultado.length) / 2; // Calculo de espacios, la longitud que tiene la cadena maxima menos la longitud de la cadena actual entre 2
+          let cadenaResultado = numero.toString().repeat(numero) // Hacemos la cadena con el numero tantas veces repetido
+          let espacios = (lengthTotal - cadenaResultado.length) / 2 // Calculo de espacios, la longitud que tiene la cadena maxima menos la longitud de la cadena actual entre 2
 
           // Escritura (Espacios Cadena Salto)
           document.write(
             ESPACIO.repeat(espacios) + cadenaResultado + SALTO_DE_LINEA
-          );
-          numero--;
+          )
+          numero--
         }
+        const FINAL = new Date()
+        console.log(FINAL - INICIO)
       }
 
       while (true) {
-        let numero = prompt('Introduce el numero maximo.');
+        let numero = prompt('Introduce el numero maximo.')
         try {
-          crearPiramide(numero);
-          break;
+          crearPiramide(numero)
+          break
         } catch (error) {}
       }
     </script>

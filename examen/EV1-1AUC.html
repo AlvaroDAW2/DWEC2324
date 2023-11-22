@@ -8,7 +8,8 @@
   <body>
     <script>
       function generarCamino(minutos) {
-        const DIRECCION = ['n', 's', 'o', 'e'];
+        const INICIO = new Date()
+        const DIRECCION = ['n', 's', 'o', 'e']
 
         /* 
   Array de valores, cada valor es un objeto con un indice y un valor
@@ -37,64 +38,66 @@
             indice: 3, // Este (e)
             valor: 1
           }
-        ];
+        ]
 
         // La aplicación debe funcionar para tiempos comprendidos entre 6 y 16 minutos
-        if (minutos < 6 || minutos > 16)
-          throw new Error('La aplicacion no permite ese número de minutos');
+        // if (minutos < 6 || minutos > 16)
+        //   throw new Error('La aplicacion no permite ese número de minutos')
         if (minutos % 2 !== 0)
-          throw new Error('La aplicacion no permite minutos impares');
+          throw new Error('La aplicacion no permite minutos impares')
 
         let posicion = {
           x: 0,
           y: 0
-        };
-        let numerosAleatorios = [];
+        }
+        let numerosAleatorios = []
         do {
-          numerosAleatorios = []; // Reinicio el array por cada iteracion (limpiar)
-          posicion.x = 0; // Reinicio de x
-          posicion.y = 0; // Reinicio de y
+          numerosAleatorios = [] // Reinicio el array por cada iteracion (limpiar)
+          posicion.x = 0 // Reinicio de x
+          posicion.y = 0 // Reinicio de y
 
           // Generacion de array de valores aleatorios desde el 0 al 3
           for (let i = 0; i < minutos; i++) {
-            numerosAleatorios.push(VALORES[Math.ceil(Math.random() * 4) - 1]);
+            numerosAleatorios.push(VALORES[Math.ceil(Math.random() * 4) - 1])
           }
 
           // Calculo de posicion
           numerosAleatorios.forEach(numero => {
             if (numero.indice === 0 || numero.indice === 1) {
               // Norte o sur
-              posicion.y += numero.valor;
-            } else posicion.x += numero.valor; // Oeste o este
-          });
-        } while (posicion.x !== 0 || posicion.y !== 0); // Mientras no este en la posicion inicial
+              posicion.y += numero.valor
+            } else posicion.x += numero.valor // Oeste o este
+          })
+        } while (posicion.x !== 0 || posicion.y !== 0) // Mientras no este en la posicion inicial
 
         // Asignacion a letras
-        return numerosAleatorios.map(numero => DIRECCION[numero.indice]);
+        const FINAL = new Date()
+        console.log(FINAL - INICIO)
+        return numerosAleatorios.map(numero => DIRECCION[numero.indice])
       }
 
-      const SALTO_DE_LINEA = '<br />';
+      const SALTO_DE_LINEA = '<br />'
       while (true) {
-        let minutos = prompt('Introduce los minutos.');
+        let minutos = prompt('Introduce los minutos.')
         try {
-          let camino = generarCamino(minutos);
+          let camino = generarCamino(minutos)
           camino.forEach(direccion => {
             switch (direccion) {
               case 'n':
-                document.write('Ve hacia el norte' + SALTO_DE_LINEA);
-                break;
+                document.write('Ve hacia el norte' + SALTO_DE_LINEA)
+                break
               case 's':
-                document.write('Ve hacia el sur' + SALTO_DE_LINEA);
-                break;
+                document.write('Ve hacia el sur' + SALTO_DE_LINEA)
+                break
               case 'o':
-                document.write('Ve hacia el oeste' + SALTO_DE_LINEA);
-                break;
+                document.write('Ve hacia el oeste' + SALTO_DE_LINEA)
+                break
               case 'e':
-                document.write('Ve hacia el este' + SALTO_DE_LINEA);
-                break;
+                document.write('Ve hacia el este' + SALTO_DE_LINEA)
+                break
             }
-          });
-          break;
+          })
+          break
         } catch (error) {}
       }
     </script>
