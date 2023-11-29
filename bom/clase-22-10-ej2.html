@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 2</title>
+  </head>
+  <body>
+    <script>
+      let miVentana
+      setTimeout(() => {
+        miVentana = window.open(
+          '',
+          'Popup',
+          `toolbar=no,
+          location=no,
+          status=no,
+          menubar=no,
+          scrollbars=yes,
+          resizable=yes,
+          width=200,
+          height=200`
+        )
+        miVentana.document.write('<h1>Bienvenido</h1>')
+        const botonCerrar = document.createElement('button')
+        botonCerrar.textContent = 'Cerrar'
+        botonCerrar.onclick = () => {
+          miVentana.close()
+        }
+        miVentana.document.body.append(botonCerrar)
+      }, 2000)
+    </script>
+  </body>
+</html>

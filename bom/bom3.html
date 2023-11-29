@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeout</title>
+  </head>
+  <body>
+    <p id="ventana"></p>
+    <script>
+      function saludar() {
+        const parrafo = document.getElementById('ventana')
+        parrafo.innerHTML += 'hola' + '<br />'
+      }
+      function parar(params) {}
+    </script>
+    <button onclick="intervalo = setInterval(saludar, 1000);">Saludar</button>
+    <button onclick="clearInterval(intervalo);">Parar</button>
+  </body>
+</html>

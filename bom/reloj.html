@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reloj</title>
+  </head>
+  <body>
+    <p id="tiempo"></p>
+    <script>
+      const tiempo = document.getElementById('tiempo')
+      const ponerTiempo = () =>
+        (tiempo.innerText = new Date().getSeconds().toString().padStart(2, '0'))
+
+      tiempo.innerText = ponerTiempo() // Pongo el tiempo nada mas aparecer
+      function temporizador() {
+        intervaloTiempo = setInterval(() => {
+          ponerTiempo()
+        }, 1000)
+      }
+      temporizador()
+    </script>
+    <button onclick="clearInterval(intervaloTiempo)">Parar</button>
+    <button onclick="temporizador()">Seguir</button>
+  </body>
+</html>

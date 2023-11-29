@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 1</title>
+  </head>
+  <body>
+    <script>
+      let miVentana = window.open(
+        '',
+        '',
+        `width=500,
+        height=200`
+      )
+      miVentana.document.write('<h1>Hola</h1>')
+      miVentana.moveTo(100, 200) // Mover la ventana
+      miVentana.focus()
+      setTimeout(() => {
+        miVentana.moveBy(100, 300)
+      }, 1000)
+      setTimeout(() => {
+        miVentana.close()
+      }, 2000)
+    </script>
+  </body>
+</html>

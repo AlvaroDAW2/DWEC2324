@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOM-1</title>
+  </head>
+  <body>
+    <p id="ventana"></p>
+    <script>
+      const SALTO_DE_LINEA = '<br />'
+      window.name = 'mi ventana'
+      let texto = 'Nombre: ' + window.name
+
+      texto += SALTO_DE_LINEA + 'Ancho externo: ' + window.outerWidth
+      texto += SALTO_DE_LINEA + 'Alto externo: ' + window.outerHeight
+      texto += SALTO_DE_LINEA + 'Ancho interno: ' + window.innerWidth
+      texto += SALTO_DE_LINEA + 'Alto interno: ' + window.innerHeight
+      texto += SALTO_DE_LINEA + 'pageXOffset: ' + window.pageXOffset
+      texto += SALTO_DE_LINEA + 'pageYOffset: ' + window.pageYOffset
+      texto += SALTO_DE_LINEA + 'desde borde izq: ' + window.screenX
+      texto += SALTO_DE_LINEA + 'desde borde superior: ' + window.screenY
+
+      const parrafo = document.getElementById('ventana')
+      parrafo.innerHTML = texto
+    </script>
+  </body>
+</html>

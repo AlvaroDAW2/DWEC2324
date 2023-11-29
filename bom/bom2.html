@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOM-1</title>
+  </head>
+  <body>
+    <p id="ventana"></p>
+    <script>
+      const SALTO_DE_LINEA = '<br />'
+      window.name = 'mi ventana'
+      let texto = 'Nombre: ' + window.name
+
+      const parrafo = document.getElementById('ventana')
+      parrafo.innerHTML = texto
+
+      var miVentana
+      function crearVentana() {
+        miVentana = window.open('', '', 'width=500,heigth=200')
+
+        miVentana.document.write('<h1>Mi ventana</h1>')
+      }
+
+      function cerrarVentana() {
+        miVentana.close()
+      }
+
+      function enfocar() {
+        miVentana.focus()
+      }
+
+      function redimensionarVentana() {
+        enfocar()
+        miVentana.resizeBy(10, 10)
+      }
+
+      function moverVentana() {
+        enfocar()
+        miVentana.moveBy(10, 10)
+      }
+
+      function imprimir() {
+        miVentana.print()
+      }
+    </script>
+    <button onclick="crearVentana()">Crear una ventana</button>
+    <button onclick="cerrarVentana()">Cerrar ventana</button>
+    <button onclick="redimensionarVentana()">Redimensionar ventana</button>
+    <button onclick="moverVentana()">Mover ventana</button>
+    <button onclick="imprimir()">Imprimir ventana</button>
+  </body>
+</html>
