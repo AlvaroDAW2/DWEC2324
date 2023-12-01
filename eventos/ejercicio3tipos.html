@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio usando los 3 tipos</title>
+    <style>
+      body {
+        min-height: 100vh;
+      }
+      .gradiente {
+        background-size: 400% 400%;
+        animation: animacion 3s infinite alternate;
+      }
+
+      @keyframes animacion {
+        0% {
+          background-position: left bottom;
+        }
+        100% {
+          background-position: right top;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="boton">¡PULSAME!</button>
+    <p id="posMouse"></p>
+    <script>
+      const boton = document.getElementById('boton')
+      const colorAleatorio = () => {
+        const numeroAleatorio = () => Math.floor(Math.random() * 255)
+        return `rgb(${numeroAleatorio()}, ${numeroAleatorio()}, ${numeroAleatorio()})`
+      }
+
+      document.addEventListener('click', e => {
+        if (e.target === boton) return
+        // document.body.style.backgroundColor = ''
+        document.body.classList.remove('gradiente')
+        document.body.style.backgroundImage = ''
+      })
+
+      boton.addEventListener('click', () => {
+        // document.body.style.backgroundColor = `rgb(${colorAleatorio()}, ${colorAleatorio()}, ${colorAleatorio()})`
+
+        document.body.style.backgroundImage = `linear-gradient(${colorAleatorio()}, ${colorAleatorio()}, ${colorAleatorio()}, ${colorAleatorio()})`
+        document.body.classList.add('gradiente')
+      })
+
+      document.addEventListener('pointermove', e => {
+        const parrafo = document.getElementById('posMouse')
+        parrafo.innerText = `X: ${e.x.toFixed(2)}\nY: ${e.y.toFixed(2)}`
+      })
+    </script>
+  </body>
+</html>

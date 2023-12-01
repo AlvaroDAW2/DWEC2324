@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Listener</title>
+  </head>
+  <body>
+    <h1 id="w3c">Modelo del W3C</h1>
+    <script>
+      const w3c = document.getElementById('w3c')
+      w3c.addEventListener('click', function () {
+        this.style.color = 'red'
+        this.style.backgroundColor = 'blue'
+      })
+    </script>
+  </body>
+</html>
