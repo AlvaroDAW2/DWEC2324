@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Texto con palabras al revés</title>
+  </head>
+  <body>
+    <p id="parrafoJuego"></p>
+    <script>
+      const frase = prompt('Escribe la frase')
+      const PARRAFO = document.getElementById('parrafoJuego')
+      PARRAFO.innerText = frase
+
+      function ponerAlRevesAlgunasPalabras(texto, n) {
+        const arrayPalabras = texto.split(' ')
+
+        let posAlReves = []
+        let pos
+        while (posAlReves.length !== 3) {
+          pos = Math.floor(Math.random() * arrayPalabras.length)
+          if (posAlReves.includes(pos)) continue
+          posAlReves.push(pos)
+        }
+        console.log(posAlReves)
+
+        return arrayPalabras.reduce((texto, palabra, index) => {
+          if (!posAlReves.includes(index)) return texto + ' ' + palabra
+          return (
+            texto +
+            ' ' +
+            Array.from(palabra).reverse().toString().replaceAll(',', '')
+          )
+        })
+      }
+
+      console.log(ponerAlRevesAlgunasPalabras(frase, 3))
+    </script>
+  </body>
+</html>
