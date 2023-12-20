@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Una funcion, varios eventos</title>
+  </head>
+  <body>
+    <h1 id="eventos">Obtener informacion</h1>
+    <h2 id="parrafo1" class="clase 1">Parrafo 1</h2>
+    <h2 id="parrafo2" class="clase 2">Parrafo 2</h2>
+
+    <script>
+      document.querySelectorAll('h1, h2').forEach(element => {
+        element.addEventListener('mouseout', manejador)
+        element.addEventListener('mouseover', manejador)
+      })
+      document.getElementById('parrafo1').addEventListener('click', saludo)
+      document.getElementById('parrafo2').addEventListener('click', saludo)
+      function manejador(e) {
+        switch (e.type) {
+          case 'mouseover':
+            this.style.color = 'red'
+            break
+          case 'mouseout':
+            this.style.color = 'blue'
+            break
+        }
+      }
+
+      function saludo(e) {
+        alert(e.target.id + ' ' + e.target.className)
+      }
+    </script>
+  </body>
+</html>
