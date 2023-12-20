@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prueba típica de examen</title>
+  </head>
+  <body>
+    <script>
+      const BR = '<br />'
+    </script>
+
+    <h1>Prueba típica de examen</h1>
+    <h2>1.- Obtener la fecha y hora actual</h2>
+    <div id="resultado1"></div>
+    <script>
+      let fecha = new Date()
+      document.getElementById('resultado1').innerHTML =
+        fecha + BR + 'Hora: ' + fecha.getHours()
+    </script>
+
+    <h2>2.- Mezclar dos Arrays</h2>
+    <div id="resultado2"></div>
+    <script>
+      const array1 = [1, 3, [2, 3], 8, 10]
+      const array2 = [2, 7, 4, 9]
+      const mezcla = [...array1, ...array2]
+      const mezclaConConcat = array1.concat(array2)
+      document.getElementById('resultado2').innerHTML = mezcla
+    </script>
+
+    <h2>3.- Borrar elementos repetidos en un array</h2>
+    <div id="resultado3"></div>
+    <script>
+      const array = [1, 1, 3, 5, 9, 9]
+      document.getElementById('resultado3').innerHTML =
+        'Array con duplicados: ' + array + BR
+      const arraySinDuplicados = new Set(array)
+      document.getElementById('resultado3').innerHTML +=
+        'Array sin duplicados: '
+      for (const elemento of arraySinDuplicados) {
+        document.getElementById('resultado3').innerHTML += elemento + ' '
+      }
+    </script>
+
+    <h2>4.- Generar un número aleatorio entre dos valores dados</h2>
+    <div id="resultado4"></div>
+    <script>
+      function generarNumeroAleatorio(min, max) {
+        return Math.round(Math.random() * (max - min) + min)
+      }
+      document.getElementById('resultado4').innerHTML = generarNumeroAleatorio(
+        2,
+        4
+      )
+    </script>
+
+    <h2>5.- Generar una cadena alfanumérica aleatoria</h2>
+    <div id="resultado5"></div>
+    <script>
+      function generarCadenaAleatoria() {
+        let cadenaAlfanumerica = Math.random().toString(36).slice(2)
+        cadenaAlfanumerica = Array.from(cadenaAlfanumerica).reduce(
+          (cadena, letra) =>
+            cadena + (Math.random() > 0.5 ? letra.toUpperCase() : letra)
+        )
+        return cadenaAlfanumerica
+      }
+      document.getElementById('resultado5').innerHTML = generarCadenaAleatoria()
+    </script>
+
+    <h2>6.- Convertir un objeto en un array</h2>
+    <div id="resultado6"></div>
+    <script>
+      const objeto = {
+        nombre: 'Alvaro',
+        edad: 19
+      }
+      const arrayDeObjeto = Array.from(Object.entries(objeto))
+      document.getElementById('resultado6').innerHTML = arrayDeObjeto
+    </script>
+
+    <h2>7.- Copiar texto al portapapeles</h2>
+    <button style="display: block" id="copiar">
+      SI HACES CLICK EN MÍ COPIARÁS MI TEXTO 🙂👍
+    </button>
+    <textarea
+      placeholder="Prueba a pegar el texto aquí"
+      ="30"
+      rows="10"
+    ></textarea>
+    <script>
+      document.getElementById('copiar').addEventListener('click', e => {
+        navigator.clipboard.writeText(e.target.textContent)
+      })
+    </script>
+
+    <h2>8.- Comprobar si una propiedad existe IN un objeto</h2>
+    <div id="resultado8"></div>
+    <script>
+      const objetoComprobarPropiedad = {
+        nombre: 'Lavadora',
+        precio: 200
+      }
+      document.getElementById('resultado8').innerHTML =
+        'precio' in objetoComprobarPropiedad
+          ? 'Precio existe en el objeto'
+          : 'Precio no existe en el objeto'
+    </script>
+
+    <h2>9.- Ordenar un Array en orden ascendente</h2>
+    <div id="resultado9"></div>
+    <script>
+      const arrayOrdenarAscendente = [10, 2, 6, 4, 5, 7, 8, 1, 0]
+      arrayOrdenarAscendente.sort((n1, n2) => n1 - n2)
+      document.getElementById('resultado9').innerHTML = arrayOrdenarAscendente
+    </script>
+
+    <h2>10.- Obtener la longitud de un objeto</h2>
+    <div id="resultado10"></div>
+    <script>
+      const objetoObtenerLongitud = {
+        x: 10,
+        y: 2,
+        z: 0
+      }
+      document.getElementById('resultado10').innerHTML = Object.keys(
+        objetoObtenerLongitud
+      ).length
+    </script>
+  </body>
+</html>
