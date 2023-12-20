@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contador</title>
+  </head>
+  <body>
+    <button id="click">Click</button>
+    <p id="contador">0</p>
+    <script>
+      const btnClick = document.getElementById('click')
+      const contadorHTML = document.getElementById('contador')
+      let contador = 0
+
+      btnClick.oncontextmenu = () => false
+
+      btnClick.addEventListener('contextmenu', () => cambiarContador(-1))
+      btnClick.addEventListener('click', () => cambiarContador(1))
+
+      function cambiarContador(valor) {
+        contador += valor
+        contadorHTML.textContent = contador
+      }
+    </script>
+  </body>
+</html>
