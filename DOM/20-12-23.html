@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM - Creacion y modificacion de elementos</title>
+    <style>
+      .miClase {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <p id="parrafo1">Este es el primer párrafo</p>
+      <p id="parrafo2">Este es el segundo páraffo</p>
+      <p id="parrafo3" class="miClase">Este es el tercer páraffo</p>
+    </div>
+
+    <br />
+
+    <button id="cambiarTextos">Cambiar texto de párrafos</button>
+    <button id="cambiarClases">Cambiar clases de párrafos</button>
+    <button id="quitarClases">Quitar clases de todos los párrafos</button>
+
+    <script>
+      window.addEventListener('load', () => {
+        // Cambiar textos
+        document
+          .getElementById('cambiarTextos')
+          .addEventListener('click', () => {
+            document.getElementById('parrafo1').textContent =
+              'Primer párrafo cambiado'
+            document.getElementsByTagName('p')[1].textContent =
+              'Segundo párrafo cambiado'
+            document.getElementsByClassName('miClase')[0].textContent =
+              'Tercer párrafo cambiado'
+          })
+
+        // Cambiar clases
+        document
+          .getElementById('cambiarClases')
+          .addEventListener('click', () => {
+            document.getElementById('parrafo1').setAttribute('class', 'miClase')
+            document.getElementById('parrafo2').classList.add('miClase') // Me gusta más trabajar sobre classList que sobre className
+          })
+
+        // Quitar clases
+        document
+          .getElementById('quitarClases')
+          .addEventListener('click', () => {
+            document.getElementById('parrafo1').setAttribute('class', '')
+            document.getElementById('parrafo2').classList.remove('miClase')
+            Array.from(document.getElementsByTagName('p')).forEach(p =>
+              p.classList.remove('miClase')
+            )
+          })
+      })
+    </script>
+  </body>
+</html>

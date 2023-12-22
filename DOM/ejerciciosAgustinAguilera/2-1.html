@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Act. 2.1</title>
+  </head>
+  <body>
+    <h1>Este es el título dinámico</h1>
+    <button id="cambiarColor">Cambiar Color</button>
+    <button id="cambiarTamano">Cambiar Tamaño Fuente</button>
+    <script>
+      const TITULO = document.getElementsByTagName('h1')[0]
+      const colorAleatorio = () => {
+        const numeroAleatorio = () => Math.floor(Math.random() * 255)
+        return `rgb(${numeroAleatorio()}, ${numeroAleatorio()}, ${numeroAleatorio()})`
+      }
+      const tamanoAleatorioRango = (min, max) => {
+        return Math.round(Math.random() * (max - min) + min) + 'px'
+      }
+      window.addEventListener('load', () => {
+        document
+          .getElementById('cambiarColor')
+          .addEventListener('click', () => {
+            TITULO.style.color = colorAleatorio()
+          })
+        document
+          .getElementById('cambiarTamano')
+          .addEventListener('click', () => {
+            TITULO.style.fontSize = tamanoAleatorioRango(8, 24)
+          })
+      })
+    </script>
+  </body>
+</html>
