@@ -11,6 +11,18 @@
     <header></header>
     <main>
       <h1>Buscaminas</h1>
+      <form id="formValores">
+        <label>
+          Escoge el ancho
+          <input id="ancho" type="number" min="1" placeholder="10" max="100" />
+        </label>
+        <label>
+          Escoge el alto
+          <input id="alto" type="number" min="1" placeholder="10" max="100" />
+        </label>
+        <input type="submit" value="Crear" />
+      </form>
+      <span class="error"></span>
       <section class="tabla"></section>
     </main>
   </body>

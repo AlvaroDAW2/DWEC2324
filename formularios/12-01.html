@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formularios - 12-01</title>
+    <style>
+      input[type='text'] {
+        display: block;
+      }
+      .fichero label input {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" method="post" enctype="multipart/form-data">
+      <label>
+        Nombre:
+        <input type="text" />
+      </label>
+      <label>
+        Apellidos:
+        <input type="text" />
+      </label>
+      <label>
+        DNI:
+        <input type="text" />
+      </label>
+      Sexo: <br />
+      <label>
+        <input type="radio" value="hombre" name="sexo" />
+        Hombre
+      </label>
+      <br />
+      <label>
+        <input type="radio" value="mujer" name="sexo" />
+        Mujer
+      </label>
+      <br />
+      <div class="fichero">
+        <label>
+          Incluir mi foto:
+          <input type="text" />
+        </label>
+        <button>Examinar...</button>
+      </div>
+      <label>
+        <input type="checkbox" checked />
+        Enviar publicidad
+      </label>
+      <br />
+      <input type="submit" value="Guardar cambios" />
+      <input type="reset" value="Borrar los datos introducidos" />
+      <select id="aprobar">
+        <option value="10">Saco 10 en DWEC</option>
+        <option value="9">Saco 9 en DWEC</option>
+        <option value="8">Saco 8 en DWEC</option>
+        <option id="añadir" value="añadir">Añadir</option>
+      </select>
+    </form>
+    <script>
+      const elemento = document.getElementById('aprobar')
+      elemento.addEventListener('change', () => {
+        if (!elemento.value === 'añadir') return
+
+        // Creacion de nueva opcion
+        const valor = prompt('Añade un nuevo valor al select')
+        const nuevaOpcion = document.createElement('option')
+        nuevaOpcion.value = valor
+        nuevaOpcion.textContent = valor
+
+        // Insertar la nueva opcion
+        const ultimaOpcion = elemento.lastElementChild
+        elemento.insertBefore(nuevaOpcion, ultimaOpcion)
+
+        // Seleccionar la nueva opcion
+        elemento.selectedIndex = elemento.options.length - 2
+      })
+    </script>
+  </body>
+</html>
