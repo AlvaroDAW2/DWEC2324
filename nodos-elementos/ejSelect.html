@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio Select y Opciones</title>
+  </head>
+  <body>
+    <select id="aprobar">
+      <option value="10">Saco 10 en DWEC</option>
+      <option value="9">Saco 9 en DWEC</option>
+      <option value="8">Saco 8 en DWEC</option>
+      <option id="añadir" value="añadir">Añadir</option>
+    </select>
+    <script>
+      const select = document.getElementById('aprobar')
+      select.addEventListener('change', () => {
+        console.log(select.value)
+        if (select.value !== 'añadir') return
+
+        // Creacion de nueva opcion
+        const valor = prompt('Añade un nuevo valor al select')
+        const nuevaOpcion = document.createElement('option')
+        nuevaOpcion.value = valor
+        nuevaOpcion.textContent = valor
+
+        // Insertar la nueva opcion
+        const ultimaOpcion = select.lastElementChild
+        select.insertBefore(nuevaOpcion, ultimaOpcion)
+
+        // Seleccionar la nueva opcion
+        select.selectedIndex = select.options.length - 2
+
+        ordenar()
+      })
+
+      function ordenar() {
+        const opcionesOrdenadas = Array.from(select.children).sort((e1, e2) =>
+          e1.textContent.localeCompare(e2.textContent)
+        )
+        console.log(opcionesOrdenadas)
+        select.replaceChildren(...opcionesOrdenadas)
+      }
+    </script>
+  </body>
+</html>
