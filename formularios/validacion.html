@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validación</title>
+    <style>
+      .error {
+        border: solid 4px red;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="miFormulario">
+      <table>
+        <tr>
+          <td>Nombre:</td>
+          <td>
+            <input type="text" name="nombre" id="nombre" />
+          </td>
+        </tr>
+        <tr>
+          <td>Teléfono:</td>
+          <td>
+            <input type="text" name="telefono" id="telefono" />
+          </td>
+        </tr>
+        <tr>
+          <td>Fecha Nacimiento:</td>
+          <td>
+            <input placeholder="Día..." type="number" id="dia" size="2" />
+            <input placeholder="Mes..." type="number" id="mes" size="2" />
+            <input placeholder="Año..." type="number" id="anio" size="4" />
+          </td>
+        </tr>
+        <tr>
+          <td>Sexo:</td>
+          <td>
+            <input type="radio" name="sexo" value="H" checked /> Hombre
+            <input type="radio" name="sexo" value="M" /> Mujer
+            <input type="radio" name="sexo" value="O" /> Otro
+          </td>
+        </tr>
+        <tr>
+          <td>Mayor de 18:</td>
+          <td>
+            <input type="checkbox" id="mayor" checked />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" value="Enviar" />
+          </td>
+        </tr>
+      </table>
+    </form>
+    <script>
+      const form1 = document.getElementById('miFormulario')
+
+      window.addEventListener('load', iniciar)
+
+      function iniciar() {
+        form1.addEventListener('submit', validar)
+      }
+
+      function validar(e) {
+        e.preventDefault()
+        if (
+          validarNombre() &&
+          validarNumero() &&
+          validarFecha() &&
+          validarCheck() &&
+          confirm('¿Estas seguro?')
+        ) {
+          e.target.submit()
+          return true
+        }
+        return false
+      }
+
+      function validarNombre() {
+        const nombre = document.getElementById('nombre')
+        if (nombre.value === '') {
+          alert('El nombre no puede estar vacío')
+          return false
+        }
+
+        return true
+      }
+
+      function validarNumero() {
+        const numero = document.getElementById('telefono')
+        if (isNaN(numero.value)) {
+          alert('Por favor, debe ser un numero')
+          return false
+        }
+        return true
+      }
+
+      function validarFecha() {
+        const dia = document.getElementById('dia')
+        const mes = document.getElementById('mes')
+        const anio = document.getElementById('anio')
+        if ([dia, mes, anio].some(elemento => isNaN(elemento.value))) {
+          alert('Por favor, las fechas deben ser numericas')
+          return false
+        }
+        return true
+      }
+
+      function validarCheck() {
+        const checkbox = document.getElementById('mayor')
+        console.log(checkbox.value)
+        if (checkbox.value !== 'on') {
+          alert('¡Debes ser mayor de edad!')
+          return false
+        }
+
+        return true
+      }
+
+      function error(elemento) {
+        elemento.classList.add('error')
+        elemento.focus()
+      }
+
+      function limpiarError() {
+        elemento.classList.remove('error')
+      }
+    </script>
+  </body>
+</html>
