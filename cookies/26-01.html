@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookies</title>
+  </head>
+  <body>
+    <button id="verTodas">Ver todas las cookies</button>
+    <button id="crearCookie">Crear cookie</button>
+    <button id="borrarCookie">Borrar cookie</button>
+    <script>
+      // Fecha para borrar cookies - o tambien podria ser new Date.now() - 1 ????
+      const FECHA_BORRAR_COOKIE = 'Thu 01 Jan 1970 00:00:01 GMT'
+
+      // Event Listenners
+      document.getElementById('verTodas').addEventListener('click', verTodas)
+
+      document
+        .getElementById('crearCookie')
+        .addEventListener('click', crearCookie)
+
+      document
+        .getElementById('borrarCookie')
+        .addEventListener('click', borrarCookie)
+
+      // Funciones
+      function crearCookie() {
+        const nombre = prompt('Escribe el nombre de la cookie')
+        const valor = prompt('Escribe el valor de la cookie ' + nombre)
+        document.cookie = `${nombre} = ${valor};`
+      }
+
+      function borrarCookie() {
+        const nombre = prompt(
+          'Escribe el nombre de la cookie que quieres borrar'
+        )
+        const cookie = document.cookie
+          .split(';')
+          .find(valor => valor.split('=')[0].trim() === nombre)
+        if (cookie) document.cookie = cookie + ';expires=' + FECHA_BORRAR_COOKIE
+        else alert('No hay ninguna cookie llamada así')
+      }
+
+      function verTodas() {
+        alert(document.cookie)
+      }
+    </script>
+  </body>
+</html>
