@@ -1,0 +1,68 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  display: block;
+}
+
+html {
+  color-scheme: dark light;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  padding: 2rem clamp(6rem, 15vw, 20rem);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.userCard {
+  background-color: rgb(8, 7, 18);
+  aspect-ratio: 9/16;
+  padding: 2rem;
+  border-radius: 0.6rem;
+  box-shadow: rgb(8, 7, 18) 0px 0px 10px;
+  border: black solid 2px;
+  display: grid;
+  grid-template-rows: 4fr 1fr;
+  place-items: start;
+  text-align: center;
+  font-size: 1.25rem;
+
+  &:hover {
+    background-color: rgb(20, 18, 45);
+  }
+
+  > figure {
+    margin: 0 auto;
+
+    > img {
+      border-radius: 1rem;
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  > a {
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: darkblue;
+    color: white;
+    border-radius: 1rem;
+
+    &:hover {
+      background-color: blue;
+    }
+  }
+}
+
+@media (width < 900px) {
+  .userCard {
+    font-size: 2rem;
+  }
+}
