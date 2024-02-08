@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Propagación</title>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="contenedor">
+      <button id="boton">boton</button>
+    </div>
+  </body>
+  <script>
+    document
+      .getElementById('contenedor')
+      .addEventListener('click', function () {
+        console.log('Contenedor hizo click')
+      })
+
+    document.getElementById('boton').addEventListener('click', function (e) {
+      console.log('Boton hizo click')
+      e.stopPropagation()
+    })
+  </script>
+</html>
