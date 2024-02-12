@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica 202 - AUC</title>
+    <style>
+      body {
+        display: grid;
+        place-content: center;
+      }
+
+      form {
+        max-width: fit-content;
+        text-align: center;
+      }
+
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <!--
+    1. Añadir un input con el NIF
+    2. Añadir un input con la fecha de matriculación (día, mes, año)
+    3. Añadir un Select con cursos académicos (desde 20-21 a 23-24 con posibilidad
+    de que el usuario añada nuevos cursos académicos.
+    4. Al menos 5 “asignaturas” del DAW
+    5. Se debe añadir un checkbox para seleccionar/deseleccionar todos los días con
+    disponibilidad.
+    6. Añadir un contador para el campo Mensaje que indique al usuario los
+    caracteres que le quedan antes de llegar al máximo.
+
+    Realizar una validación (débil, en el lado del cliente) utilizando indistintamente los
+    métodos vistos en clase (los tres deben estar representados) con las siguientes
+    restricciones:
+      - Ningún elemento vacío
+      - NIF correcto ( comprobar letra)
+      - Mensaje: de entre 2 y 500 caracteres
+      - Color por defecto: azul
+      - Días: seleccionar al menos dos
+      - Preferente: por defecto marcado el lunes
+      - Botón de “Haz click sobre mí”: ir a Google.com
+  -->
+  <body>
+    <form method="post" id="formulario">
+      <fieldset>
+        <legend>Datos personales:</legend>
+        <label>
+          Introduce tu nombre:
+          <input type="text" required id="nombre" /><br />
+        </label>
+        <label>
+          Mensaje:<br />
+          <textarea
+            required
+            maxlength="500"
+            minlength="2"
+            cols="100"
+            rows="10"
+            id="mensaje"
+          ></textarea>
+        </label>
+        <p>Te quedan <strong id="contadorMensaje">500</strong> carácteres</p>
+      </fieldset>
+      <p>Elige un color:</p>
+      <label>
+        <input type="radio" id="rojo" name="color" value="Rojo" />
+        Rojo </label
+      ><br />
+      <label>
+        <input type="radio" id="verde" name="color" value="Verde" />
+        Verde </label
+      ><br />
+      <label>
+        <input checked type="radio" id="azul" name="color" value="Azul" />
+        Azul </label
+      ><br />
+      <label>
+        <input type="radio" id="oscuro" name="color" value="Oscuro" />
+        Oscuro</label
+      ><br />
+      <br />
+      Selecciona una asignatura DWES:
+      <select name="asignatura">
+        <option value="DWES">DWES</option>
+        <option value="DWEC">DWEC</option>
+        <option value="DIW">DIW</option>
+        <option value="DAW">DAW</option>
+        <option value="Ingles">INGLÉS</option></select
+      ><br />
+      <p>Selecciona los días con disponibilidad:</p>
+      <label>
+        <input
+          type="checkbox"
+          id="lunes"
+          name="diaDisponibilidad"
+          value="Lunes"
+        />
+        Lunes </label
+      ><br />
+      <label>
+        <input
+          type="checkbox"
+          id="martes"
+          name="diaDisponibilidad"
+          value="Martes"
+        />
+        Martes</label
+      ><br />
+      <label>
+        <input
+          type="checkbox"
+          id="miercoles"
+          name="diaDisponibilidad"
+          value="Miércoles"
+        />
+        Miércoles</label
+      ><br />
+      <label>
+        <input
+          type="checkbox"
+          id="jueves"
+          name="diaDisponibilidad"
+          value="Jueves"
+        />
+        Jueves</label
+      ><br />
+      <label>
+        <input
+          type="checkbox"
+          id="viernes"
+          name="diaDisponibilidad"
+          value="Viernes"
+        />
+        Viernes</label
+      >
+      <br />
+      <span id="error-diasDisponibilidad" class="error"></span>
+      <br /><br />
+      <label>
+        Todos los días
+        <input type="checkbox" id="todosDias" /> </label
+      ><br /><br />
+      Selecciona el día preferente:
+      <select id="preferente">
+        <option value="lunes" selected>Lunes</option>
+        <option value="martes">Martes</option>
+        <option value="miercoles">Miércoles</option>
+        <option value="jueves">Jueves</option>
+        <option value="viernes">Viernes</option></select
+      ><br /><br />
+      <label>
+        NIF
+        <input required id="nif" type="text" placeholder="Escribe tu NIF" />
+      </label>
+      <br />
+      <span id="error-nif" class="error"></span>
+      <br /><br />
+      <label>
+        Fecha de matriculación
+        <input required id="fechaMatriculacion" type="date" /> </label
+      ><br /><br />
+      Curso académico:
+      <select id="cursoAcademico">
+        <option value="2021">20-21</option>
+        <option value="2122">21-22</option>
+        <option value="2223">22-23</option>
+        <option value="2324">23-24</option>
+        <option value="añadir">Añadir</option></select
+      ><br /><br />
+      <input type="submit" value="Haz clic para enviar información" />
+      <input type="reset" value="Comenzar a rellenar de nuevo" />
+      <button type="button" id="irGoogle">Haz click sobre mí</button>
+    </form>
+    <script src="202AUC.js"></script>
+  </body>
+</html>
