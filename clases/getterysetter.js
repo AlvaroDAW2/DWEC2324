@@ -1,4 +1,4 @@
-const mensaje = document.getElementById('mensaje')
+const mensaje = document.getElementById('mensajes')
 
 class Coche {
   constructor(marca) {
@@ -17,5 +17,3 @@ class Coche {
 const miCoche = new Coche('Toyota')
 // mensaje.textContent = miCoche.anuncio()
 mensaje.textContent += miCoche.marca
-
-// un poco raro esto la verdad, en mi vida los he usado
