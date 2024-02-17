@@ -13,8 +13,9 @@
       const contadorHTML = document.getElementById('contador')
       let contador = 0
 
-      btnClick.oncontextmenu = () => false
+      btnClick.oncontextmenu = () => false // Tradicional
 
+      // Modelo W3C
       btnClick.addEventListener('contextmenu', () => cambiarContador(-1))
       btnClick.addEventListener('click', () => cambiarContador(1))
 

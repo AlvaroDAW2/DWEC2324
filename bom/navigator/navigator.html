@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigator</title>
+  </head>
+  <body>
+    <script>
+      let navi = '<br>codeName: ' + navigator.appCodeName
+      navi += '<br>appVersion: ' + navigator.appVersion
+      navi += '<br>appName: ' + navigator.appName
+      navi += '<br>product: ' + navigator.product
+      navi += '<br>platform: ' + navigator.platform
+      navi += '<br>online: ' + navigator.onLine + '\n'
+      navi += '<br>lenguaje: ' + navigator.language + '\n'
+      navi += '<br>cookieenabled: ' + navigator.cookieEnabled + '\n'
+      navi += '<br>userAgent: ' + navigator.userAgent + '\n'
+      navi += '<br>geolocation: ' + navigator.geolocation + '\n'
+      navi += '<br>javaEnabled(): ' + navigator.javaEnabled() + '\n'
+
+      document.getElementById('dos').innerHTM = navi
+      console.log(navi)
+    </script>
+  </body>
+</html>

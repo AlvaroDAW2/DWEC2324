@@ -69,7 +69,6 @@ h1 {
   border-radius: var(--radius);
   overflow: hidden;
   margin: 0 auto;
-  border: blue 1px solid;
   place-items: center;
   display: none;
 }
@@ -84,6 +83,9 @@ h1 {
   width: 50px;
   aspect-ratio: 1/1;
   user-select: none;
+  font-size: 1rem;
+  font-weight: bold;
+  position: relative;
 
   &:hover {
     background-color: lightgray;
@@ -100,4 +102,30 @@ h1 {
   display: block;
   text-align: center;
   color: red;
+}
+
+.mina,
+.bandera {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: contain;
+  width: 90%;
+  height: 90%;
+}
+
+.finDePartida {
+  display: none;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  position: fixed;
+  bottom: 2rem;
+  right: 50%;
+  translate: 50%;
+  border-radius: var(--radius);
+  border: white solid 1px;
+  padding: 1rem;
+  background-color: gray;
 }
