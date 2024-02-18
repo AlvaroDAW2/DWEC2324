@@ -1,27 +1,61 @@
+/**
+ * -------------- CONFIGURACIÓN --------------
+ */
 const DIR_IMG = './img'
 const CONFIG = {
   INDICES: {
     BOMBA: -1,
     NADA: 0
   },
-  ANCHO_MAX: 20,
-  ALTO_MAX: 20,
+  LIMITES: {
+    ANCHO_MAX: 25,
+    ALTO_MAX: 25,
+    ANCHO_MIN: 5,
+    ALTO_MIN: 5
+  },
   IMG: {
     MINA: `${DIR_IMG}/mina.png`,
     BANDERA: `${DIR_IMG}/bandera.png`
   },
-  PORCENTAJE_BOMBA: 0.15
+  PORCENTAJE_BOMBA: 0.15,
+  SEGUNDOS_POR_CELDA: 1.25
 }
 
-// DOM
+const MENSAJES = {
+  ERROR: {
+    NO_DATOS: 'Inserta datos en ambos campos ❗',
+    VALORES_MAXIMOS: `Los valores máximos son: ${CONFIG.LIMITES.ANCHO_MAX} de ancho y ${CONFIG.LIMITES.ALTO_MAX} de alto ❗`,
+    VALORES_MINIMOS: `Los valores mínimos son: ${CONFIG.LIMITES.ANCHO_MIN} de ancho y ${CONFIG.LIMITES.ALTO_MIN} de alto ❗`
+  },
+  FIN_PARTIDA: {
+    VICTORIA: '¡Has ganado!',
+    DERROTA: '¡Has perdido!',
+    NUEVA_PARTIDA: '¿Estás seguro de que deseas empezar una nueva partida?'
+  }
+}
+
+/**
+ * -------------- REFERENCIAS AL DOM --------------
+ */
 const tabla = document.querySelector('.tabla')
 const dialogFinDePartida = document.querySelector('.finDePartida')
+const banderas = document.getElementById('nBanderas')
+const minutosHTML = document.getElementById('minutos')
+const segundosHTML = document.getElementById('segundos')
 
-// Logica
+/**
+ * -------------- VARIABLES UTILIZADAS DE FORMA GLOBAL --------------
+ */
 let matriz = []
 let ancho, alto
 let celdasParaGanar
+let minutos
+let segundos
+let intervaloContador
 
+/**
+ * -------------- FUNCIONES --------------
+ */
 function generarTablero() {
   document.getElementById('formValores').addEventListener('submit', e => {
     e.preventDefault()
@@ -35,15 +69,19 @@ function generarTablero() {
       error.textContent = texto
     }
     if ([ancho, alto].includes('')) {
-      mostrarError('Inserta datos en ambos campos ❗')
+      mostrarError(MENSAJES.ERROR.NO_DATOS)
       return
     }
-    if (ancho > CONFIG.ANCHO_MAX || alto > CONFIG.ALTO_MAX) {
-      mostrarError(
-        `Los valores maximos son: ${CONFIG.ANCHO_MAX} de ancho y ${CONFIG.ALTO_MAX} de alto ❗`
-      )
+    if (ancho > CONFIG.LIMITES.ANCHO_MAX || alto > CONFIG.LIMITES.ALTO_MAX) {
+      mostrarError(MENSAJES.ERROR.VALORES_MAXIMOS)
       return
     }
+    if (ancho < CONFIG.LIMITES.ANCHO_MIN || alto < CONFIG.LIMITES.ALTO_MIN) {
+      mostrarError(MENSAJES.ERROR.VALORES_MINIMOS)
+      return
+    }
+
+    logicaContador()
 
     // Creamos la matriz
     matriz = Array.from({ length: alto }, () =>
@@ -52,8 +90,32 @@ function generarTablero() {
     crearBombas()
     rellenarTablero()
     dibujarTableroHTML()
-    console.log(matriz)
   })
+}
+
+function logicaContador() {
+  const representarContador = () => {
+    segundosHTML.textContent = segundos.toString().padStart(2, '0')
+    minutosHTML.textContent = minutos.toString().padStart(2, '0')
+  }
+
+  // Calcular el contador
+  segundos = Number.parseInt((ancho * alto * CONFIG.SEGUNDOS_POR_CELDA) % 60)
+  minutos = Number.parseInt((ancho * alto * CONFIG.SEGUNDOS_POR_CELDA) / 60)
+  representarContador()
+
+  intervaloContador = setInterval(() => {
+    segundos--
+    if (segundos < 0) {
+      minutos--
+      segundos = 59
+    }
+    representarContador()
+
+    if (minutos === 0 && segundos <= 0) {
+      finDePartida()
+    }
+  }, 1000)
 }
 
 function numeroAleatorio(min, max) {
@@ -63,7 +125,8 @@ function numeroAleatorio(min, max) {
 }
 
 function crearBombas() {
-  let bombas = ancho * alto * CONFIG.PORCENTAJE_BOMBA
+  let bombas = Math.round(ancho * alto * CONFIG.PORCENTAJE_BOMBA)
+  banderas.textContent = bombas
   while (bombas > 0) {
     const x = numeroAleatorio(0, ancho - 1) // TODO: explicar esto
     const y = numeroAleatorio(0, alto - 1)
@@ -144,15 +207,18 @@ function dibujarTableroHTML() {
         }
       })
       button.addEventListener('contextmenu', e => {
+        if (!intervaloContador) return
         e.preventDefault()
         const banderaActual = button.querySelector('.bandera')
         if (banderaActual) {
+          banderas.textContent = +banderas.textContent + 1
           banderaActual.remove()
           return
         }
         const bandera = document.createElement('img')
         bandera.src = CONFIG.IMG.BANDERA
         bandera.classList.add('bandera')
+        banderas.textContent -= 1
         // mina.style.display = 'none'
 
         button.appendChild(bandera)
@@ -198,6 +264,9 @@ function liberarCeldas(x, y, indiceBoton) {
 }
 
 function finDePartida(victoria = false) {
+  clearInterval(intervaloContador)
+  intervaloContador = null
+
   for (let y = 0; y < alto; y++) {
     for (let x = 0; x < ancho; x++) {
       const celda = tabla.children[y * ancho + x]
@@ -211,15 +280,16 @@ function finDePartida(victoria = false) {
   }
 
   document.getElementById('msgFinDePartida').textContent = victoria
-    ? '¡Has ganado!'
-    : '¡Has perdido!'
+    ? MENSAJES.FIN_PARTIDA.VICTORIA
+    : MENSAJES.FIN_PARTIDA.DERROTA
   dialogFinDePartida.style.display = 'flex'
+  tabla.querySelectorAll('.bandera').forEach(bandera => bandera.remove()) // Eliminar todas las banderas
 }
 
 document.getElementById('nueva').addEventListener('click', nuevaPartida)
 
 function nuevaPartida() {
-  if (!confirm('¿Deseas de verdad empezar de nuevo?')) return
+  if (!confirm(MENSAJES.FIN_PARTIDA.NUEVA_PARTIDA)) return
   location.reload()
 }
 

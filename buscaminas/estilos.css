@@ -129,3 +129,10 @@ h1 {
   padding: 1rem;
   background-color: gray;
 }
+
+.panelInfo {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
