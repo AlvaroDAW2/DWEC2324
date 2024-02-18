@@ -58,6 +58,10 @@ input[type='submit'],
     box-shadow: white 0px 0px 10px;
   }
 }
+.btnNuevaPartida {
+  width: 30%;
+  margin: 0 auto;
+}
 
 h1 {
   margin-bottom: 1rem;
@@ -116,10 +120,8 @@ h1 {
 
 .finDePartida {
   display: none;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
   font-weight: bold;
+  font-size: 4rem;
   position: fixed;
   bottom: 2rem;
   right: 50%;
@@ -128,11 +130,42 @@ h1 {
   border: white solid 1px;
   padding: 1rem;
   background-color: gray;
+  z-index: 10;
 }
 
 .panelInfo {
+  width: 30%;
+  margin: 0 auto;
   margin-top: 2rem;
-  display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.continuar,
+.cerrarSesion {
+  padding: 1rem;
+  font-size: 1.5rem;
+  background-color: darkgray;
+  border: white 5px solid;
+  border-radius: var(--radius);
+
+  &:hover {
+    background-color: lightgray;
+    cursor: pointer;
+    color: black;
+  }
+}
+
+#bienvenida {
+  margin-top: 1rem;
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+}
+
+.infoGuardadoDePartidas {
+  width: 50%;
+  margin: 2rem auto;
+  text-align: center;
+  font-size: 1.3rem;
 }

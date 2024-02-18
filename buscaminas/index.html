@@ -11,7 +11,7 @@
     <header></header>
     <main>
       <h1>Buscaminas</h1>
-      <form id="formValores">
+      <form id="formValores" style="display: none">
         <label>
           Escoge el ancho
           <input id="ancho" type="number" min="1" placeholder="10" max="100" />
@@ -22,13 +22,18 @@
         </label>
         <input type="submit" value="Crear" />
       </form>
+      <form id="login">
+        <label>
+          Usuario:
+          <input type="text" id="usuario" placeholder="Nombre de usuario..." />
+        </label>
+        <input type="submit" value="Iniciar Sesión" />
+      </form>
       <span class="error"></span>
+      <section id="bienvenida"></section>
       <section class="tabla"></section>
-      <div role="dialog" class="finDePartida">
-        <span id="msgFinDePartida"></span>
-        <button id="nueva" class="btnNuevaPartida">Nueva Partida</button>
-      </div>
-      <section class="panelInfo">
+      <div role="dialog" class="finDePartida"></div>
+      <section class="panelInfo" style="display: none">
         <div>
           <img
             width="35"
@@ -45,6 +50,12 @@
       <button id="nueva" style="display: none" class="btnNuevaPartida">
         Nueva Partida
       </button>
+      <p class="infoGuardadoDePartidas">
+        Las partidas son guardadas automáticamente al cerrar o refrescar la
+        pestaña por lo que no perderás tu progreso y podrás continuar en otro
+        momento 🙂. Eso sí, si pierdes o ganas entonces la partida guardada se
+        borra.
+      </p>
     </main>
     <script src="iniciarBuscaminas.js"></script>
   </body>

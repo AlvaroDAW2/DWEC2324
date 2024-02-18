@@ -30,24 +30,40 @@ const MENSAJES = {
   ERROR: {
     NO_DATOS: 'Inserta datos en ambos campos ❗',
     VALORES_MAXIMOS: `Los valores máximos son: ${CONFIG.LIMITES.ANCHO_MAX} de ancho y ${CONFIG.LIMITES.ALTO_MAX} de alto ❗`,
-    VALORES_MINIMOS: `Los valores mínimos son: ${CONFIG.LIMITES.ANCHO_MIN} de ancho y ${CONFIG.LIMITES.ALTO_MIN} de alto ❗`
+    VALORES_MINIMOS: `Los valores mínimos son: ${CONFIG.LIMITES.ANCHO_MIN} de ancho y ${CONFIG.LIMITES.ALTO_MIN} de alto ❗`,
+    USUARIO_NO_RELLENADO: 'Por favor rellena el nombre del usuario'
   },
   FIN_PARTIDA: {
     VICTORIA: '¡Has ganado!',
     DERROTA: '¡Has perdido!',
     NUEVA_PARTIDA: '¿Estás seguro de que deseas empezar una nueva partida?'
-  }
+  },
+  BIENVENIDA: `Bienvenido ${localStorage.getItem('usuarioActual')}`,
+  CONTINUAR: 'Continuar Partida',
+  CERRAR_SESION: 'Cerrar Sesión'
 }
 
 /**
  * -------------- REFERENCIAS AL DOM --------------
  */
 
+// Formulario de inicio de sesión
+const formLogin = document.getElementById('login')
+
+// Sección de bienvenida donde se encuentra el mensaje de bienvenida y el botón para continuar con la última partida guardada
+const seccionBienvenida = document.getElementById('bienvenida')
+
+// Formulario de valores
+const formValores = document.getElementById('formValores')
+
 // Referencia a la tabla del juego
 const tabla = document.querySelector('.tabla')
 
 // Referencia al diálogo de fin de partida
 const dialogFinDePartida = document.querySelector('.finDePartida')
+
+// Referencia al panel de información donde se encuentra el contador de banderas y el cronómetro
+const panelInfo = document.querySelector('.panelInfo')
 
 // Referencia al contador de banderas
 const banderas = document.getElementById('nBanderas')
@@ -76,24 +92,94 @@ let segundos
 // Intervalo del contador (lo guardo de forma global para luego usarlo para comprobar si ha acabado la partida o no a la hora de poner banderas)
 let intervaloContador
 
+// Celdas abiertas, es un array que usaremos despues a la hora de continuar la última partida guardada para saber qué celdas estaban abiertas y así poderlas abrir al cargar la partida.
+let celdasAbiertas = []
+
+// Celdas con banderas
+let celdasBandera = []
+
 /**
  * -------------- FUNCIONES --------------
  */
 
+function mostrarError(texto) {
+  const error = document.querySelector('.error')
+  error.textContent = texto
+}
+
+// Cuando cargue la página llamará a las funciones generarTablero e iniciarSesión
+window.addEventListener('load', () => {
+  iniciarSesion() // Controlará el formulario de incio de sesión
+})
+
+// Event listener para guardar el estado del juego antes de cerrar la ventana
+window.addEventListener('beforeunload', guardarPartida)
+
+function iniciarSesion() {
+  if (localStorage.getItem('usuarioActual')) {
+    // Se elimina el formulario de inicio de sesión y se muestra el mensaje de bienvenida
+    formLogin.remove()
+    const parrafoUsuario = document.createElement('p')
+    parrafoUsuario.textContent = MENSAJES.BIENVENIDA
+    seccionBienvenida.appendChild(parrafoUsuario)
+
+    // Si existe una partida guardada entonces se muestra el botón para continuar la partida
+    if (localStorage.getItem(localStorage.getItem('usuarioActual')) !== '') {
+      const botonContinuarPartida = document.createElement('button')
+      botonContinuarPartida.textContent = MENSAJES.CONTINUAR
+      botonContinuarPartida.classList.add('continuar')
+      botonContinuarPartida.addEventListener('click', continuarPartida)
+
+      seccionBienvenida.appendChild(botonContinuarPartida)
+    }
+
+    // Añadir botón para cerrar la sesión
+    const botonCerrarSesion = document.createElement('button')
+    botonCerrarSesion.textContent = MENSAJES.CERRAR_SESION
+    botonCerrarSesion.classList.add('cerrarSesion')
+    botonCerrarSesion.addEventListener('click', cerrarSesion)
+
+    seccionBienvenida.appendChild(botonCerrarSesion)
+
+    generarTablero() // Controlará el formulario de ancho y alto y cuando se envíe generará el tablero
+  }
+
+  formLogin.addEventListener('submit', e => {
+    e.preventDefault()
+
+    const usuario = document.getElementById('usuario')
+    if (!usuario.value) {
+      mostrarError(MENSAJES.ERROR.USUARIO_NO_RELLENADO)
+      return
+    }
+
+    // Si no existe ninguna partida guardada entonces le da un valor de un string vacío
+    if (localStorage.getItem(localStorage.getItem('usuarioActual')) === '') {
+      localStorage.setItem(usuario.value.toLocaleLowerCase(), '')
+    }
+    localStorage.setItem('usuarioActual', usuario.value.toLocaleLowerCase())
+    location.reload()
+  })
+}
+
+// Función para cerrar la sesión
+function cerrarSesion() {
+  localStorage.setItem('usuarioActual', '')
+  location.reload()
+}
+
 // Función para generar el tablero y empezar la partida
 function generarTablero() {
+  // Mostrar el formulario de valores
+  formValores.style.display = 'block'
+
   // Evento de envío del formulario
-  document.getElementById('formValores').addEventListener('submit', e => {
+  formValores.addEventListener('submit', e => {
     e.preventDefault()
 
     // Validación de datos de entrada
     ancho = document.getElementById('ancho').value
     alto = document.getElementById('alto').value
-
-    const mostrarError = texto => {
-      const error = document.querySelector('.error')
-      error.textContent = texto
-    }
 
     if ([ancho, alto].includes('')) {
       mostrarError(MENSAJES.ERROR.NO_DATOS)
@@ -110,9 +196,6 @@ function generarTablero() {
       return
     }
 
-    // Iniciar el contador
-    logicaContador()
-
     // Crear la matriz y generar el tablero, esta es una forma corta de crear una matriz bidimensional llena de 0
     matriz = Array.from({ length: alto }, () =>
       Array.from({ length: ancho }).fill(CONFIG.INDICES.NADA)
@@ -121,34 +204,6 @@ function generarTablero() {
     rellenarTablero()
     dibujarTableroHTML()
   })
-}
-
-// Función para manejar la lógica del contador
-function logicaContador() {
-  const representarContador = () => {
-    segundosHTML.textContent = segundos.toString().padStart(2, '0')
-    minutosHTML.textContent = minutos.toString().padStart(2, '0')
-  }
-
-  // Calcular el tiempo inicial del contador
-  segundos = Number.parseInt((ancho * alto * CONFIG.SEGUNDOS_POR_CELDA) % 60)
-  minutos = Number.parseInt((ancho * alto * CONFIG.SEGUNDOS_POR_CELDA) / 60)
-  representarContador()
-
-  // Actualizar el contador cada segundo
-  intervaloContador = setInterval(() => {
-    segundos--
-    if (segundos < 0) {
-      minutos--
-      segundos = 59
-    }
-    representarContador()
-
-    // Terminar la partida si el tiempo llega a cero
-    if (minutos === 0 && segundos <= 0) {
-      finDePartida()
-    }
-  }, 1000)
 }
 
 // Función para generar un número aleatorio en un rango dado
@@ -227,6 +282,7 @@ function dibujarTableroHTML() {
   for (let y = 0; y < alto; y++) {
     for (let x = 0; x < ancho; x++) {
       const celda = document.createElement('button')
+      celda.classList.add('celda')
 
       // Si es una bomba, añadir la imagen correspondiente
       const esBomba = matriz[y][x] === CONFIG.INDICES.BOMBA
@@ -238,7 +294,18 @@ function dibujarTableroHTML() {
         celda.appendChild(mina)
       }
 
-      celda.classList.add('celda')
+      // Abrir la celda en caso de que esté abierta en la última partida guardada
+      if (celdasAbiertas.find(celda => celda.x === x && celda.y === y)) {
+        celda.classList.add('abierto')
+        if (matriz[y][x] !== CONFIG.INDICES.NADA) {
+          celda.textContent = matriz[y][x]
+        }
+      }
+
+      // Poner bandera en la celda en caso de que tenga bandera en la última partida guardada
+      if (celdasBandera.find(celda => celda.x === x && celda.y === y)) {
+        crearBandera(celda)
+      }
 
       // Evento que maneja cuando haces click izquierdo en una celda
       celda.addEventListener('click', () => {
@@ -252,19 +319,24 @@ function dibujarTableroHTML() {
 
       // Evento que maneja cuando haces click derecho en una celda
       celda.addEventListener('contextmenu', e => {
-        if (!intervaloContador) return // Aquí es donde verifico si el intervalo es null, que quiere decir que la partida ha finalizado, si es así entonces no puedes poner banderas
+        if (!intervaloContador || celda.classList.contains('abierto')) return // Aquí es donde verifico si el intervalo es null, que quiere decir que la partida ha finalizado, si es así entonces no puedes poner banderas, también verifico si la casilla ya está abierta, si ya está abierta entonces no dejo poner bandera
         e.preventDefault()
         const banderaActual = celda.querySelector('.bandera')
         if (banderaActual) {
           banderas.textContent = +banderas.textContent + 1 // El + antes de banderas.textContent es una forma de pasar el valor a número, es la forma más sencilla y recomendada. He usado esta forma a lo largo del documento así que no volveré a explicarlo.
           banderaActual.remove()
+          // Eliminar la celda con la bandera para luego continuar con la partida guardada y la bandera quitada
+          celdasBandera.splice(
+            celdasBandera.findIndex(celda => celda.x === x && celda.y === y),
+            1
+          )
           return
         }
-        const bandera = document.createElement('img')
-        bandera.src = CONFIG.IMG.BANDERA
-        bandera.classList.add('bandera')
+        crearBandera(celda)
         banderas.textContent -= 1
-        celda.appendChild(bandera)
+
+        // Guardar la celda con la bandera para luego continuar con la partida guardada y las banderas puestas
+        celdasBandera.push({ x, y })
       })
 
       // Añadir el botón a la tabla de juego
@@ -275,6 +347,54 @@ function dibujarTableroHTML() {
   // Eliminar mensaje de error y formulario de entrada
   document.querySelector('.error').remove()
   document.getElementById('formValores').remove()
+
+  // Mostrar el panel de información (banderas y cronómetro)
+  panelInfo.style.display = 'flex'
+
+  // Eliminar sección de bienvenida y botón de continuar
+  seccionBienvenida.remove()
+
+  // Iniciar el contador
+  logicaContador()
+}
+
+// Función para crear una bandera en una celda, la tengo separada porque reutilizo este código cuando pone la bandera al continuar la última partida guardada
+function crearBandera(celda) {
+  const bandera = document.createElement('img')
+  bandera.src = CONFIG.IMG.BANDERA
+  bandera.classList.add('bandera')
+  celda.appendChild(bandera)
+}
+
+// Función para manejar la lógica del contador
+function logicaContador() {
+  const representarContador = () => {
+    segundosHTML.textContent = segundos.toString().padStart(2, '0')
+    minutosHTML.textContent = minutos.toString().padStart(2, '0')
+  }
+
+  // Solo si es una partida nueva entonces calcula cuántos minutos y segundos son aceptables según el ancho y el alto del tablero
+  if (!segundos && !minutos) {
+    // Calcular el tiempo inicial del contador
+    segundos = Number.parseInt((ancho * alto * CONFIG.SEGUNDOS_POR_CELDA) % 60)
+    minutos = Number.parseInt((ancho * alto * CONFIG.SEGUNDOS_POR_CELDA) / 60)
+  }
+  representarContador()
+
+  // Actualizar el contador cada segundo
+  intervaloContador = setInterval(() => {
+    segundos--
+    if (segundos < 0) {
+      minutos--
+      segundos = 59
+    }
+    representarContador()
+
+    // Terminar la partida si el tiempo llega a cero
+    if (minutos === 0 && segundos <= 0) {
+      finDePartida()
+    }
+  }, 1000)
 }
 
 // Función para liberar celdas al hacer click en una celda vacía
@@ -295,6 +415,7 @@ function liberarCeldas(x, y, indiceBoton) {
 
   // Marcar la celda como abierta
   boton.classList.toggle('abierto')
+  celdasAbiertas.push({ x, y }) // Guardamos la celda abierta para luego abrirla cuando se cargue la partida guardada
 
   // Si la celda es una celda vacía, continuar liberando celdas cerca de ella
   if (matriz[y][x] === CONFIG.INDICES.NADA) {
@@ -318,6 +439,9 @@ function liberarCeldas(x, y, indiceBoton) {
 
 // Función para terminar la partida
 function finDePartida(victoria = false) {
+  // Eliminar la partida guardada
+  localStorage.setItem(localStorage.getItem('usuarioActual'), '')
+
   clearInterval(intervaloContador)
   intervaloContador = null
 
@@ -337,7 +461,7 @@ function finDePartida(victoria = false) {
   }
 
   // Mostrar el mensaje de fin de partida
-  document.getElementById('msgFinDePartida').textContent = victoria
+  dialogFinDePartida.textContent = victoria
     ? MENSAJES.FIN_PARTIDA.VICTORIA
     : MENSAJES.FIN_PARTIDA.DERROTA
   dialogFinDePartida.style.display = 'flex'
@@ -355,5 +479,45 @@ function nuevaPartida() {
   location.reload() // Recarga la página
 }
 
-// Generar el tablero al cargar la página
-generarTablero()
+// Función para guardar la partida del usuario actual
+function guardarPartida() {
+  if (!intervaloContador) return // Si no hay una partida en curso entonces no guardar nada
+  const usuarioActual = localStorage.getItem('usuarioActual')
+  localStorage.setItem(
+    usuarioActual,
+    JSON.stringify({
+      banderas: banderas.textContent,
+      minutos,
+      segundos,
+      matriz,
+      intervaloContador,
+      celdasParaGanar,
+      ancho,
+      alto,
+      celdasAbiertas,
+      celdasBandera
+    })
+  )
+}
+
+// Función para continuar la partida respecto a la última partida guardada del usuario
+function continuarPartida() {
+  const partidaGuardada = JSON.parse(
+    localStorage.getItem(localStorage.getItem('usuarioActual'))
+  )
+
+  banderas.textContent = partidaGuardada.banderas
+  minutos = partidaGuardada.minutos
+  segundos = partidaGuardada.segundos
+  ancho = partidaGuardada.ancho
+  alto = partidaGuardada.alto
+  celdasParaGanar = partidaGuardada.celdasParaGanar
+  intervaloContador = partidaGuardada.intervaloContador
+  matriz = partidaGuardada.matriz
+  celdasAbiertas = partidaGuardada.celdasAbiertas
+  celdasBandera = partidaGuardada.celdasBandera
+
+  console.log(matriz)
+
+  dibujarTableroHTML()
+}
